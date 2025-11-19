@@ -11,6 +11,9 @@ import {
 import "../styles/RentForm.css";
 import logo from "../assets/logo.png";
 
+// ✅ Update this to your live backend URL
+const BASE_URL = "https://book-my-ride-3.onrender.com";
+
 function RentForm() {
   const [formData, setFormData] = useState({
     name: "",
@@ -30,7 +33,7 @@ function RentForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("http://localhost:8080/rent/create", {
+      const res = await fetch(`${BASE_URL}/rent/create`, {  // ✅ Updated live URL
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -101,7 +104,6 @@ function RentForm() {
         }}
       >
         <h1 className="rent-title">Rent a Car</h1>
-
 
         <form onSubmit={handleSubmit} className="rent-form">
           <input

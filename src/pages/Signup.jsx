@@ -8,6 +8,9 @@ import { FaFacebookF, FaWhatsapp, FaTwitter, FaInstagramSquare } from "react-ico
 import "../styles/Signup.css";
 import logo from "../assets/logo.png";
 
+// ✅ Update this to your live backend URL
+const BASE_URL = "https://book-my-ride-3.onrender.com";
+
 function Signup() {
 
     const [signupInfo, setSignupInfo] = useState({
@@ -32,7 +35,7 @@ function Signup() {
         }
 
         try {
-            const url = "http://localhost:8080/auth/signup";
+            const url = `${BASE_URL}/auth/signup`; // ✅ Updated to live URL
             const response = await fetch(url, {
                 method: "POST",
                 headers: { 'content-type': 'application/json' },

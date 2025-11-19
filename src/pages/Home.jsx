@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { handleSuccess } from "../utils";
 import "../styles/Home.css";
 
+// ✅ Update this to your live backend URL
+const BASE_URL = "https://book-my-ride-3.onrender.com";
 
 function Home() {
   const [rents, setRents] = useState([]);
@@ -12,7 +14,7 @@ function Home() {
   useEffect(() => {
     const fetchRents = async () => {
       try {
-        const res = await fetch("http://localhost:8080/rent/all");
+        const res = await fetch(`${BASE_URL}/rent/all`); // ✅ Updated live URL
         const data = await res.json();
         if (data.success) setRents(data.data);
       } catch (err) {
@@ -26,7 +28,7 @@ function Home() {
     localStorage.removeItem("token");
     localStorage.removeItem("loggedInUser");
     handleSuccess("Logged out successfully");
-      navigate("/");  // Landing page
+    navigate("/");  // Landing page
   };
 
   return (

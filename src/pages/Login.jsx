@@ -8,6 +8,9 @@ import { FaFacebookF, FaWhatsapp, FaTwitter, FaInstagramSquare } from "react-ico
 import "../styles/Login.css";
 import logo from "../assets/logo.png";
 
+// ✅ Update this to your live backend URL
+const BASE_URL = "https://book-my-ride-3.onrender.com";
+
 function Login() {
     const [loginInfo, setLoginInfo] = useState({ email: '', password: '' });
     const navigate = useNavigate();
@@ -21,7 +24,7 @@ function Login() {
             return handleError('Email and password required');
 
         try {
-            const res = await fetch('http://localhost:8080/auth/login', {
+            const res = await fetch(`${BASE_URL}/auth/login`, {  // ✅ Updated live URL
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(loginInfo)
@@ -32,7 +35,7 @@ function Login() {
                 localStorage.setItem('token', data.jwtToken);
                 localStorage.setItem('loggedInUser', data.name);
 
-                // ⭐ ADDED: Store login time
+                // ⭐ Store login time
                 localStorage.setItem("loginTime", Date.now());
 
                 handleSuccess(data.message);
