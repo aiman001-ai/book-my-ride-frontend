@@ -1,3 +1,21 @@
 @import "tailwindcss";
 
+/* ==== GLOBAL SCROLLBAR FIX (Zoomcar style) ==== */
 
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;        /* scroll nahi, auto hoga */
+  width: 100%;
+  height: 100%;
+}
+
+/* Chrome, Edge, Safari – scrollbar complete hide */
+body::-webkit-scrollbar {
+  display: none !important;
+}
+
+/* Firefox – scrollbar hide */
+body {
+  scrollbar-width: none;
+}
