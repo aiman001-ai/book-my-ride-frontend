@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { handleError, handleSuccess, BASE_URL } from "../utils";
 import "../index.css";
-import logo from "../assets/logo.png";
+
 import Header from "../components/Header";
 
 function Signup() {
@@ -39,19 +39,20 @@ function Signup() {
       <Header />
       <div style={{ width: "46%", height: "100%", background: "linear-gradient(135deg,#0f5fb6 0%,#1b87d6 100%)", color: "#fff", padding: "40px 36px", display: "flex", flexDirection: "column", justifyContent: "center" }}>
         <div>
-          <img src={logo} alt="logo" style={{ width: "130px", marginBottom: "20px" }} />
+          
           <h2 style={{ margin: "0 0 12px 0", fontSize: "22px" }}>Create your account</h2>
-          <p style={{ fontSize: "14px", opacity: 0.95 }}>Join us to book rides instantly and manage your travel.</p>
+          <p style={{ fontSize: "14px", opacity: 0.95 }}>Join BookMyRideToday to book rides quickly and enjoy a smooth travel experience.</p>
           <ul style={{ marginLeft: "18px", lineHeight: "1.6" }}>
             <li>Easy ride booking</li>
             <li>Secure login system</li>
             <li>Fast customer support</li>
+            <li>Compare and negotiate prices</li>
             <li>Track your bookings</li>
           </ul>
         </div>
       </div>
       <div style={{ width: "54%", height: "100%", padding: "42px 36px", background: "#fff", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
-        <div style={{ width: "100%", maxWidth: "300px", padding: "10px 25px", background: "#fff", border: ".1px solid #ccc", boxShadow: "0 8px 20px rgba(0,0,0,0.15)", marginTop: "-43px" }}>
+        <div style={{ width: "100%", maxWidth: "300px", padding: "10px 25px", background: "#fff", border: ".1px solid #ccc", boxShadow: "0 8px 20px rgba(0,0,0,0.15)", marginTop: "-20px" }}>
           <h1 style={{ textAlign: "center", fontSize: "36px", fontWeight: "300", lineHeight: "46px", WebkitFontSmoothing: "antialiased", marginBottom: "18px" }}>Signup</h1>
           <form onSubmit={handleSignup}>
             <label style={{ fontSize: "14px" }}>Full Name</label>

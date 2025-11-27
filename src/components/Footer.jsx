@@ -1,11 +1,22 @@
 // Path: frontend\src\components\Footer.jsx
 import React from "react";
-import "../styles/Footer.css";
 
 function Footer() {
   return (
-    <footer className="footer">
-      <p>© 2025 Book My Ride • All Rights Reserved</p>
+    <footer
+      style={{
+        width: "100%",
+        background: "#0f0e0eff",
+        color: "#fff",
+        padding: "1px 20px",
+        display: "flex",
+        justifyContent: "center", // horizontal center
+        alignItems: "center",     // vertical center
+        fontSize: "14px",
+        textAlign: "center",
+      }}
+    >
+      © 2025 BookMyRideToday. All Rights Reserved. Developed by R-Fa Creative Solutions
     </footer>
   );
 }

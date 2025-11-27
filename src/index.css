@@ -19,3 +19,9 @@ body::-webkit-scrollbar {
 body {
   scrollbar-width: none;
 }
+/* Angelina Font Import */
+
+
+/* frontend/src/index.css ke top me add karo */
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap');
+

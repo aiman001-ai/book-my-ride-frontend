@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { handleError, handleSuccess, BASE_URL } from "../utils";
 import "../index.css";
-import logo from "../assets/logo.png";
+
 import Header from "../components/Header";
 
 function Login() {
@@ -42,14 +42,15 @@ function Login() {
       <Header />
       <div style={{ width: "46%", height: "100%", background: "linear-gradient(135deg,#0f5fb6 0%,#1b87d6 100%)", color: "#fff", padding: "40px 36px", display: "flex", flexDirection: "column", justifyContent: "center" }}>
         <div>
-          <img src={logo} alt="logo" style={{ width: "130px", marginBottom: "20px" }} />
-          <h2 style={{ margin: "0 0 12px 0", fontSize: "22px" }}>Welcome Back!</h2>
-          <p style={{ fontSize: "14px", opacity: 0.95 }}>Login to continue accessing all premium car rental services.</p>
+         
+          <h2 style={{ margin: "0 0 12px 0", fontSize: "22px" }}>Welcome Back, Host!</h2>
+          <p style={{ fontSize: "14px", opacity: 0.95 }}>Access your bookings, interact with riders, and streamline your hosting workflow effortlessly.</p>
           <ul style={{ marginLeft: "18px", lineHeight: "1.6" }}>
-            <li>Fast login & booking</li>
-            <li>Track your reservations</li>
-            <li>Exclusive offers</li>
-            <li>Premium customer support</li>
+            <li>Receive and review new booking requests instantly</li>
+            <li>Chat with riders and discuss pricing details</li>
+            <li>Approve or reject trips with one click</li>
+            <li>Manage ongoing rides with full transparency</li>
+            <li>Enjoy a seamless, efficient hosting experience</li>
           </ul>
         </div>
       </div>
