@@ -11,6 +11,8 @@ function Login() {
   const [loginInfo, setLoginInfo] = useState({ email: "", password: "" });
   const navigate = useNavigate();
 
+  const isMobile = window.innerWidth < 768;
+
   const handleChange = (e) =>
     setLoginInfo({ ...loginInfo, [e.target.name]: e.target.value });
 
@@ -42,14 +44,12 @@ function Login() {
   return (
     <div
       style={{
-        height: "100vh",
+        minHeight: "100vh",
         width: "100vw",
         display: "flex",
         overflow: "hidden",
         fontFamily: "Segoe UI, sans-serif",
-
-        // ⭐ RESPONSIVE FIX 
-        flexDirection: window.innerWidth < 768 ? "column-reverse" : "row",
+        flexDirection: isMobile ? "column-reverse" : "row",
       }}
     >
       <Header />
@@ -57,23 +57,24 @@ function Login() {
       {/* LEFT INFO PANEL */}
       <div
         style={{
-          width: window.innerWidth < 768 ? "100%" : "46%",
-          minHeight: window.innerWidth < 768 ? "45vh" : "100%",
+          width: isMobile ? "100%" : "46%",
+          minHeight: isMobile ? "42vh" : "100%",
           background: "linear-gradient(135deg,#0f5fb6 0%,#1b87d6 100%)",
           color: "#fff",
           padding: "40px 36px",
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
-          textAlign: window.innerWidth < 768 ? "center" : "left",
+          textAlign: isMobile ? "center" : "left",
         }}
       >
         <h2 style={{ margin: "0 0 12px 0", fontSize: "22px" }}>Welcome Back, Host!</h2>
         <p style={{ fontSize: "14px", opacity: 0.95 }}>
-          Access your bookings, interact with riders, and streamline your hosting workflow effortlessly.
+          Access your bookings, interact with riders, and streamline your hosting workflow
+          effortlessly.
         </p>
 
-        <ul style={{ marginLeft: window.innerWidth < 768 ? "0" : "18px", lineHeight: "1.6" }}>
+        <ul style={{ marginLeft: isMobile ? "0" : "18px", lineHeight: "1.6" }}>
           <li>Receive new booking requests instantly</li>
           <li>Chat with riders and discuss pricing</li>
           <li>Approve or reject trips easily</li>
@@ -82,11 +83,11 @@ function Login() {
         </ul>
       </div>
 
-      {/* RIGHT LOGIN FORM */}
+      {/* RIGHT LOGIN PANEL */}
       <div
         style={{
-          width: window.innerWidth < 768 ? "100%" : "54%",
-          minHeight: window.innerWidth < 768 ? "55vh" : "100%",
+          width: isMobile ? "100%" : "54%",
+          minHeight: isMobile ? "58vh" : "100%",
           padding: "42px 36px",
           background: "#fff",
           display: "flex",
@@ -97,19 +98,18 @@ function Login() {
         <div
           style={{
             width: "100%",
-            maxWidth: "300px",
+            maxWidth: "320px",
             padding: "30px 25px",
             background: "#fff",
-            border: ".1px solid #ccc",
+            border: "0.1px solid #ccc",
             boxShadow: "0 8px 20px rgba(0,0,0,0.15)",
-            marginTop: "-43px",
             borderRadius: "8px",
           }}
         >
           <h1
             style={{
               textAlign: "center",
-              fontSize: "36px",
+              fontSize: "34px",
               fontWeight: "300",
               marginBottom: "18px",
             }}
