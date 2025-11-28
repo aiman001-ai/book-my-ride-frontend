@@ -2,7 +2,7 @@
 import { toast } from "react-toastify";
 
 // Base URL of your live backend
-export const BASE_URL = "http://localhost:8080";  
+export const BASE_URL = "https://book-my-ride-3.onrender.com";  
 
 // Toast notifications
 export const handleSuccess = (msg) => toast.success(msg, { position: "top-right" });

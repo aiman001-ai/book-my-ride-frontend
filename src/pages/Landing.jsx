@@ -1,9 +1,7 @@
 // Path: frontend\src\pages\Landing.jsx
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import "../index.css";
-
-import logo from "../assets/logo.png";
+import "../index.css"
 import { handleError, handleSuccess } from "../utils";
 
 // 🔥 Import all city images
@@ -38,15 +36,7 @@ function Landing() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
-  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
-  useEffect(() => {
-    const handleResize = () => setScreenWidth(window.innerWidth);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  const isMobile = screenWidth <= 900;
-  const isSmallMobile = screenWidth <= 500;
+  // Removed screenWidth / isMobile logic entirely
 
   const [formData, setFormData] = useState({
     name: "",
@@ -93,8 +83,10 @@ function Landing() {
     } catch (err) {
       handleError("Something went wrong");
     }
+
     setLoading(false);
   };
+
 
   // 🔥 Cities array with imported images
   const cities = [
@@ -127,206 +119,208 @@ function Landing() {
   return (
     <div style={{ minHeight: "100vh", background: "#ececec" }}>
       {/* HEADER */}
-      <header
-        style={{
-          position: "fixed",
-          top: 0,
-          width: "100%",
-          height: "65px",
-          padding: "0 20px",
-          background: "#0f0e0eff",
-          borderBottom: "1px solid #ddd",
-          boxShadow: "0 2px 5px rgba(0,0,0,0.1)",
-          color: "#fff",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          zIndex: 1000,
-        }}
-      >
-        <button
-          onClick={() => navigate("/login")}
-          style={{
-            background: "#e0d2d2ff",
-            color: "#003f03ff",
-            border: "none",
-            padding: isMobile ? "6px 14px" : "8px 20px",
-            fontSize: isMobile ? "14px" : "16px",
-            borderRadius: "6px",
-            cursor: "pointer",
-            fontWeight: "600",
-          }}
-        >
-          Login / Signup
-        </button>
-      </header>
-
+     <header
+  style={{
+    position: "fixed",
+    top: 0,
+    width: "100%",
+    height: "65px",
+    padding: "0 clamp(12px, 2vw, 20px)", // responsive horizontal padding
+    background: "#0f0e0eff",
+    borderBottom: "1px solid #ddd",
+    boxShadow: "0 2px 5px rgba(0,0,0,0.1)",
+    color: "#fff",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    zIndex: 1000,
+    boxSizing: "border-box",
+  }}
+>
+  <button
+    onClick={() => navigate("/login")}
+    style={{
+      background: "#e0d2d2ff",
+      color: "#003f03ff",
+      border: "none",
+      padding: "8px clamp(12px, 2vw, 20px)", // responsive padding
+      fontSize: "clamp(14px, 1.2vw, 16px)", // responsive font size
+      borderRadius: "6px",
+      cursor: "pointer",
+      fontWeight: "600",
+    }}
+  >
+    Login / Signup
+  </button>
+</header>
       {/* MAIN LAYOUT */}
       <div
-        style={{
-          marginTop: "50px",
-          display: "flex",
-          flexDirection: isMobile ? "column" : "row",
-          width: "100%",
-          height: isMobile ? "auto" : "calc(100vh - 80px)",
-          border: "1px solid #e0e0e0",
-          borderRadius: "12px",
-          boxShadow: "0px 4px 18px rgba(0,0,0,0.12)",
-          background: "#fff",
-        }}
-      >
-        {/* LEFT FORM BOX */}
-        <div
-          style={{
-            width: isMobile ? "100%" : "40%",
-            background: "#fff",
-            padding: isMobile ? "18px" : "30px",
-            boxShadow: "0 0 10px rgba(0,0,0,0.2)",
-          }}
-        >
-          <h2
-            style={{
-              fontSize: isSmallMobile ? "16px" : isMobile ? "18px" : "20px",
-              marginBottom: "15px",
-            }}
-          >
-            Book My Ride Today
-          </h2>
+  style={{
+    marginTop: "50px",
+    display: "flex",
+    flexWrap: "wrap", // allows stacking on small screens
+    width: "100%",
+    border: "1px solid #e0e0e0",
+    borderRadius: "12px",
+    boxShadow: "0px 4px 18px rgba(0,0,0,0.12)",
+    background: "#fff",
+  }}
+>
+  {/* LEFT FORM BOX */}
+  <div
+    style={{
+      flex: "1 1 300px", // grow, shrink, base width
+      maxWidth: "40%",   // on large screens
+      minWidth: "280px", // on small screens
+      background: "#fff",
+      padding: "30px",
+      boxShadow: "0 0 10px rgba(0,0,0,0.2)",
+      boxSizing: "border-box",
+    }}
+  >
+    <h2
+      style={{
+        fontSize: "20px", // can scale with CSS clamp if needed
+        marginBottom: "15px",
+      }}
+    >
+      Book My Ride Today
+    </h2>
 
           <form onSubmit={handleSubmit}>
-            <input
-              name="name"
-              placeholder="Full Name"
-              value={formData.name}
-              onChange={handleChange}
-              required
-              style={getInputStyle(isMobile, isSmallMobile)}
-            />
-            <input
-              name="contact"
-              placeholder="Contact Number"
-              value={formData.contact}
-              onChange={handleChange}
-              required
-              style={getInputStyle(isMobile, isSmallMobile)}
-            />
-            <input
-              name="numberOfPassengers"
-              placeholder="Number of Passengers"
-              type="number"
-              value={formData.numberOfPassengers}
-              onChange={handleChange}
-              required
-              style={getInputStyle(isMobile, isSmallMobile)}
-            />
-            <input
-              name="cityPickPoint"
-              placeholder="City Pick Point"
-              value={formData.cityPickPoint}
-              onChange={handleChange}
-              required
-              style={getInputStyle(isMobile, isSmallMobile)}
-            />
-            <input
-              name="cityDropPoint"
-              placeholder="City Drop Point"
-              value={formData.cityDropPoint}
-              onChange={handleChange}
-              required
-              style={getInputStyle(isMobile, isSmallMobile)}
-            />
-            <div
-              style={{
-                display: "flex",
-                flexDirection: isMobile ? "column" : "row",
-                gap: "10px",
-              }}
-            >
-              <input
-                name="date"
-                type="date"
-                value={formData.date}
-                onChange={handleChange}
-                required
-                style={getInputStyle(isMobile, isSmallMobile)}
-              />
-              <input
-                name="time"
-                type="time"
-                value={formData.time}
-                onChange={handleChange}
-                required
-                style={getInputStyle(isMobile, isSmallMobile)}
-              />
-            </div>
+  <input
+    name="name"
+    placeholder="Full Name"
+    value={formData.name}
+    onChange={handleChange}
+    required
+    style={getInputStyle()}
+  />
 
-            <button
-              type="submit"
-              disabled={loading}
-              style={{
-                width: "100%",
-                padding: isSmallMobile ? "10px" : "14px",
-                background: "#00a86b",
-                color: "#fff",
-                border: "none",
-                borderRadius: "6px",
-                fontSize: isSmallMobile ? "14px" : "17px",
-                cursor: "pointer",
-                opacity: loading ? 0.6 : 1,
-                marginTop: "10px",
-              }}
-            >
-              {loading ? "Please wait..." : "Submit"}
-            </button>
+  <input
+    name="contact"
+    placeholder="Contact Number"
+    value={formData.contact}
+    onChange={handleChange}
+    required
+    style={getInputStyle()}
+  />
+
+  <input
+    name="numberOfPassengers"
+    placeholder="Number of Passengers"
+    type="number"
+    value={formData.numberOfPassengers}
+    onChange={handleChange}
+    required
+    style={getInputStyle()}
+  />
+
+  <input
+    name="cityPickPoint"
+    placeholder="City Pick Point"
+    value={formData.cityPickPoint}
+    onChange={handleChange}
+    required
+    style={getInputStyle()}
+  />
+
+  <input
+    name="cityDropPoint"
+    placeholder="City Drop Point"
+    value={formData.cityDropPoint}
+    onChange={handleChange}
+    required
+    style={getInputStyle()}
+  />
+
+  {/* DATE + TIME — Fully Responsive */}
+  <div
+    style={{
+      display: "flex",
+      flexWrap: "wrap",
+      gap: "10px",
+    }}
+  >
+    <input
+      name="date"
+      type="date"
+      value={formData.date}
+      onChange={handleChange}
+      required
+      style={{ ...getInputStyle(), flex: "1 1 160px" }}
+    />
+    <input
+      name="time"
+      type="time"
+      value={formData.time}
+      onChange={handleChange}
+      required
+      style={{ ...getInputStyle(), flex: "1 1 160px" }}
+    />
+  </div>
+
+           <button
+  type="submit"
+  disabled={loading}
+  style={{
+    width: "100%",
+    padding: "clamp(10px, 2.5vw, 14px)",
+    background: "#00a86b",
+    color: "#fff",
+    border: "none",
+    borderRadius: "6px",
+    fontSize: "clamp(14px, 2.5vw, 17px)",
+    cursor: "pointer",
+    opacity: loading ? 0.6 : 1,
+    marginTop: "10px",
+  }}
+>
+  {loading ? "Please wait..." : "Submit"}
+</button>
           </form>
         </div>
 
         {/* RIGHT GREEN BOX */}
         <div
   style={{
-    width: isMobile ? "100%" : "60%",
+    width: "min(100%, 750px)",
     background: "#00a86b",
     color: "#fff",
-    padding: isMobile ? "4px 19px 19px 19px" : "10px 30px 30px 30px",
- // slightly reduced padding for large screens
+    padding: "clamp(15px, 3vw, 30px)",
     display: "flex",
     flexDirection: "column",
-    justifyContent: "flex-start", // prevent vertical centering
-    gap: isMobile ? "7x" : "12px",
-    textAlign: isMobile ? "center" : "left",
-    boxSizing: "border-box", // include padding in width
-    minHeight: "100%", // allows box to expand with content
+    justifyContent: "flex-start",
+    gap: "clamp(10px, 2vw, 20px)",
+    textAlign: "left",
+    boxSizing: "border-box",
+    borderRadius: "8px",
   }}
 >
   {/* Info items */}
   <InfoItem
     title="Why BookMyRideToday?"
     text="BookMyRideToday is a completely free platform for both riders and hosts. Riders can submit their booking requests and interact with multiple hosts to compare and negotiate ride prices before confirming their trip. Hosts can sign up, log in, and access the booking list to efficiently manage their rides. This ensures a flexible, transparent, and seamless experience for everyone on the platform."
-    isMobile={isMobile}
   />
-  
+
   <InfoItem
     title="Top-Rated Cars"
     text="Premium, well-maintained vehicles for every journey"
-    isMobile={isMobile}
   />
 
   <InfoItem
     title="Freedom to Explore"
     text="Go anywhere, anytime with flexible trip options"
-    isMobile={isMobile}
   />
 
   <InfoItem
     title="Ride Assurance"
     text="Fully sanitized cars with complete safety coverage"
-    isMobile={isMobile}
   />
 
   <InfoItem
     title="Instant Support"
     text="Quick help from our dedicated travel experts"
-    isMobile={isMobile}
   />
 </div>
 
@@ -334,227 +328,239 @@ function Landing() {
 
       {/* WHY BOOKMYRIDE SECTION - Dark Mode Style */}
       <div
-        style={{
-          width: "100%",
-          background: "#525050ff", // Dark Background
-          padding: isMobile ? "30px 20px" : "60px 60px",
-          color: "#fff", // White Text
-        }}
-      >
-        <h2
-          style={{
-            fontSize: isMobile ? "22px" : "30px",
-            fontWeight: "600",
-            marginBottom: "30px",
-            textAlign: isMobile ? "center" : "left",
-            color: "#f1f1f1",
-          }}
-        >
-          Why BookMyRideToday?
-        </h2>
+  style={{
+    width: "100%",
+    background: "#525050ff",
+    padding: "clamp(30px, 5vw, 60px)",
+    color: "#fff",
+  }}
+>
+  <h2
+    style={{
+      fontSize: "clamp(22px, 3vw, 30px)",
+      fontWeight: "600",
+      marginBottom: "30px",
+      textAlign: "center",
+      color: "#f1f1f1",
+    }}
+  >
+    Why BookMyRideToday?
+  </h2>
 
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: isMobile ? "1fr 1fr" : "1fr 1fr 1fr 1fr",
-            gap: "20px",
+  <div
+    style={{
+      display: "grid",
+      gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
+      gap: "20px",
           }}
         >
           {/* Item 1 */}
-          <div
-            style={{
-              background: "#1f1f1f",
-              padding: "20px",
-              borderRadius: "12px",
-              textAlign: "center",
-              border: "1px solid #2a2a2a",
-              boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
-            }}
-          >
-            <img
-              src="https://cdn-icons-png.flaticon.com/512/3500/3500827.png"
-              alt="Hassle Free"
-              style={{ height: "60px", marginBottom: "10px" }}
-            />
-            <h3 style={{ fontSize: "20px", marginBottom: "5px", color: "#fff" }}>
-              100%
-            </h3>
-            <p style={{ fontSize: "15px", color: "#cfcfcf" }}>
-              Hassle Free Secured Trip
+           <div
+    style={{
+      background: "#1f1f1f",
+      padding: "20px",
+      borderRadius: "12px",
+      textAlign: "center",
+      border: "1px solid #2a2a2a",
+      boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
+    }}
+  >
+    <img
+      src="https://cdn-icons-png.flaticon.com/512/3500/3500827.png"
+      alt="Hassle Free"
+      style={{ height: "60px", marginBottom: "10px" }}
+    />
+    <h3 style={{ fontSize: "20px", marginBottom: "5px", color: "#fff" }}>
+      100%
+    </h3>
+    <p style={{ fontSize: "15px", color: "#cfcfcf" }}>
+      Hassle Free Secured Trip
             </p>
           </div>
 
           {/* Item 2 */}
           <div
-            style={{
-              background: "#5a2f43ff",
-              padding: "20px",
-              borderRadius: "12px",
-              textAlign: "center",
-              border: "1px solid #2a2a2a",
-              boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
-            }}
-          >
-            <img
-              src="https://cdn-icons-png.flaticon.com/512/3208/3208754.png"
-              alt="Cars"
-              style={{ height: "60px", marginBottom: "10px" }}
-            />
-            <h3 style={{ fontSize: "20px", marginBottom: "5px", color: "#fff" }}>
-              25000+
-            </h3>
-            <p style={{ fontSize: "15px", color: "#cfcfcf" }}>
-              Quality cars in the city
+    style={{
+      background: "#5a2f43ff",
+      padding: "20px",
+      borderRadius: "12px",
+      textAlign: "center",
+      border: "1px solid #2a2a2a",
+      boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
+    }}
+  >
+    <img
+      src="https://cdn-icons-png.flaticon.com/512/3208/3208754.png"
+      alt="Cars"
+      style={{ height: "60px", marginBottom: "10px" }}
+    />
+    <h3 style={{ fontSize: "20px", marginBottom: "5px", color: "#fff" }}>
+      25000+
+    </h3>
+    <p style={{ fontSize: "15px", color: "#cfcfcf" }}>
+      Quality cars in the city
             </p>
           </div>
 
           {/* Item 3 */}
           <div
-            style={{
-              background: "#5a2f43ff",
-              padding: "20px",
-              borderRadius: "12px",
-              textAlign: "center",
-              border: "1px solid #2a2a2a",
-              boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
-            }}
-          >
-            <img
-              src="https://cdn-icons-png.flaticon.com/512/854/854878.png"
-              alt="Delivery"
-              style={{ height: "60px", marginBottom: "10px" }}
-            />
-            <h3 style={{ fontSize: "20px", marginBottom: "5px", color: "#fff" }}>
-              Delivery
-            </h3>
-            <p style={{ fontSize: "15px", color: "#cfcfcf" }}>
-              Anywhere, Anytime
+    style={{
+      background: "#5a2f43ff",
+      padding: "20px",
+      borderRadius: "12px",
+      textAlign: "center",
+      border: "1px solid #2a2a2a",
+      boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
+    }}
+  >
+    <img
+      src="https://cdn-icons-png.flaticon.com/512/854/854878.png"
+      alt="Delivery"
+      style={{ height: "60px", marginBottom: "10px" }}
+    />
+    <h3 style={{ fontSize: "20px", marginBottom: "5px", color: "#fff" }}>
+      Delivery
+    </h3>
+    <p style={{ fontSize: "15px", color: "#cfcfcf" }}>
+      Anywhere, Anytime
             </p>
           </div>
 
           {/* Item 4 */}
           <div
-            style={{
-              background: "#1f1f1f",
-              padding: "20px",
-              borderRadius: "12px",
-              textAlign: "center",
-              border: "1px solid #2a2a2a",
-              boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
-            }}
-          >
-            <img
-              src="https://cdn-icons-png.flaticon.com/512/854/854894.png"
-              alt="Unlimited"
-              style={{ height: "60px", marginBottom: "10px" }}
-            />
-            <h3 style={{ fontSize: "20px", marginBottom: "5px", color: "#fff" }}>
-              Endless
-            </h3>
-            <p style={{ fontSize: "15px", color: "#cfcfcf" }}>
-              Pay by hour, drive limitless
+    style={{
+      background: "#1f1f1f",
+      padding: "20px",
+      borderRadius: "12px",
+      textAlign: "center",
+      border: "1px solid #2a2a2a",
+      boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
+    }}
+  >
+    <img
+      src="https://cdn-icons-png.flaticon.com/512/854/854894.png"
+      alt="Unlimited"
+      style={{ height: "60px", marginBottom: "10px" }}
+    />
+    <h3 style={{ fontSize: "20px", marginBottom: "5px", color: "#fff" }}>
+      Endless
+    </h3>
+    <p style={{ fontSize: "15px", color: "#cfcfcf" }}>
+      Pay by hour, drive limitless
             </p>
           </div>
         </div>
       </div>
 
       {/* BECOME A HOST SECTION - Solid Color + Signup Navigation */}
-      <div
-        style={{
-          width: "100%",
-          marginTop: "50px",
-          position: "relative",
-          background: "#00a86b",
-          height: isMobile ? "220px" : "350px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          color: "#fff",
-          textAlign: "center",
-          padding: "20px",
-        }}
-      >
-        {/* Text On Color */}
-        <div>
-          <h2 style={{ fontSize: isMobile ? "22px" : "34px", marginBottom: "10px" }}>
-            Become a Partner
-          </h2>
-          <p style={{ fontSize: isMobile ? "14px" : "18px", marginBottom: "20px" }}>
-            Earn money by sharing your car with trusted renters
-          </p>
+    <div
+  style={{
+    width: "100%",
+    marginTop: "50px",
+    position: "relative",
+    background: "#00a86b",
+    height: "clamp(220px, 30vw, 350px)",  // fully responsive height
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    color: "#fff",
+    textAlign: "center",
+    padding: "20px",
+  }}
+>
+  {/* Text On Color */}
+  <div>
+    <h2
+      style={{
+        fontSize: "clamp(22px, 3vw, 34px)",
+        marginBottom: "10px",
+      }}
+    >
+      Become a Partner
+    </h2>
+
+    <p
+      style={{
+        fontSize: "clamp(14px, 1.5vw, 18px)",
+        marginBottom: "20px",
+      }}
+    >
+      Earn money by sharing your car with trusted renters
+    </p>
 
           <button
-            onClick={() => navigate("/signup")}
-            style={{
-              background: "#fff",
-              color: "#00a86b",
-              border: "none",
-              padding: isMobile ? "10px 20px" : "14px 30px",
-              fontSize: isMobile ? "14px" : "18px",
-              borderRadius: "8px",
-              cursor: "pointer",
-              fontWeight: "600",
-            }}
-          >
-            Start Hosting
-          </button>
+  onClick={() => navigate("/signup")}
+  style={{
+    background: "#fff",
+    color: "#00a86b",
+    border: "none",
+    padding: "clamp(10px, 2vw, 16px) clamp(20px, 3vw, 34px)",
+    fontSize: "clamp(14px, 1.5vw, 18px)",
+    borderRadius: "8px",
+    cursor: "pointer",
+    fontWeight: "600",
+  }}
+>
+  Start Hosting
+</button>
         </div>
       </div>
 
       {/* Cities Grid with imported images */}
-      <div
+     <div
+  style={{
+    width: "100%",
+    background: "#fff",
+    padding: "clamp(20px, 4vw, 60px)",
+  }}
+>
+  <h2
+    style={{
+      fontSize: "clamp(20px, 2.5vw, 30px)",
+      fontWeight: "600",
+      marginBottom: "25px",
+      textAlign: "left",
+    }}
+  >
+           Ride Around Popular Cities in India
+</h2>
+
+<div
+  style={{
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", // fully responsive grid
+    gap: "clamp(12px, 2vw, 18px)",
+  }}
+>
+  {cities.map((city, index) => (
+    <div
+      key={index}
+      style={{
+        background: "#f2f2f2",
+        borderRadius: "8px",
+        cursor: "pointer",
+        overflow: "hidden",
+        transition: "0.2s",
+      }}
+    >
+      <img
+        src={city.img}
+        alt={city.name}
         style={{
           width: "100%",
-          background: "#fff",
-          padding: isMobile ? "25px 18px" : "50px 60px",
+          height: "clamp(100px, 20vw, 140px)", // responsive image height
+          objectFit: "cover",
+        }}
+      />
+      <div
+        style={{
+          padding: "10px",
+          textAlign: "center",
+          fontSize: "clamp(14px, 1.2vw, 17px)", // responsive text
+          fontWeight: 500,
         }}
       >
-        <h2
-          style={{
-            fontSize: isMobile ? "22px" : "30px",
-            fontWeight: "600",
-            marginBottom: "25px",
-            textAlign: isMobile ? "center" : "left",
-          }}
-        >
-          Ride Around Popular Cities in India
-        </h2>
-
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: isMobile ? "1fr 1fr" : "1fr 1fr 1fr 1fr",
-            gap: "18px",
-          }}
-        >
-          {cities.map((city, index) => (
-            <div
-              key={index}
-              style={{
-                background: "#f2f2f2",
-                borderRadius: "8px",
-                cursor: "pointer",
-                overflow: "hidden",
-              }}
-            >
-              <img
-                src={city.img}
-                alt={city.name}
-                style={{
-                  width: "100%",
-                  height: "120px",
-                  objectFit: "cover",
-                }}
-              />
-              <div
-                style={{
-                  padding: "8px",
-                  textAlign: "center",
-                  fontSize: isMobile ? "15px" : "17px",
-                  fontWeight: 500,
-                }}
-              >
-                {city.name}
+        {city.name}
               </div>
             </div>
           ))}
@@ -562,74 +568,90 @@ function Landing() {
       </div>
 
       {/* 🔥🔥 ABOUT US SECTION (ADDED HERE) */}
-      <div
-        style={{
-          width: "100%",
-          background: "#0f0e0e",
-          color: "#fff",
-          padding: "50px 30px",
-          marginTop: "20px",
-          borderBottom: "1px solid rgba(255,255,255,0.2)",
-        }}
-      >
-        <h2 style={{ fontSize: "26px", marginBottom: "15px" }}>About Us</h2>
+<div
+  style={{
+    width: "100%",
+    background: "#0f0e0e",
+    color: "#fff",
+    padding: "clamp(40px, 5vw, 60px) clamp(20px, 4vw, 40px)", // responsive padding
+    marginTop: "20px",
+    borderBottom: "1px solid rgba(255,255,255,0.2)",
+  }}
+>
+  <h2
+    style={{
+      fontSize: "clamp(22px, 3vw, 32px)", // responsive heading size
+      marginBottom: "clamp(12px, 2vw, 20px)",
+      fontWeight: "600",
+    }}
+  >
+    About Us
+  </h2>
 
-        <p
-          style={{
-            fontSize: "16px",
-            lineHeight: "1.6",
-            opacity: 0.9,
-            fontFamily: "'Dancing Script', cursive",
-          }}
-        >
-          Founded in 2025 and headquartered in Najibabad, India, BookMyRideToday is a
-          leading marketplace for car sharing focused in India. The BookMyRideToday
-          community connects Hosts with Guests, offering affordable, smart, and
-          sustainable transportation solutions across the country.
-        </p>
+     <p
+  style={{
+    fontSize: "clamp(14px, 1.2vw, 16px)",   // responsive font
+    lineHeight: "1.65",
+    opacity: 0.9,
+    fontFamily: "'Dancing Script', cursive",
+    maxWidth: "900px",
+  }}
+>
+  Founded in 2025 and headquartered in Najibabad, India, BookMyRideToday is a
+  leading marketplace for car sharing focused in India. The BookMyRideToday
+  community connects Hosts with Guests, offering affordable, smart, and
+  sustainable transportation solutions across the country.
+</p>
 
-        {/* Columns */}
-        <div
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            marginTop: "30px",
-            gap: "40px",
-          }}
-        >
-          {/* Company */}
-          <div>
-            <p style={{ fontSize: "14px", margin: "4px 0" }}>Terms and Conditions</p>
-            <p style={{ fontSize: "14px", margin: "4px 0" }}>Privacy Policy</p>
-          </div>
+{/* Columns */}
+<div
+  style={{
+    display: "flex",
+    flexWrap: "wrap",
+    marginTop: "30px",
+    gap: "clamp(20px, 3vw, 40px)", // responsive gap
+  }}
+>
+  {/* Company */}
+  <div style={{ flex: "1 1 200px" }}>
+    <p style={{ fontSize: "clamp(12px, 1vw, 14px)", margin: "4px 0" }}>
+      Terms and Conditions
+    </p>
+    <p style={{ fontSize: "clamp(12px, 1vw, 14px)", margin: "4px 0" }}>
+      Privacy Policy
+    </p>
+  </div>
 
-          {/* Our Services */}
-          <div>
-            <p style={{ fontSize: "14px", margin: "4px 0" }}>Daily Drives</p>
-            <p style={{ fontSize: "14px", margin: "4px 0" }}>BookMyRideToday Hosts</p>
-          </div>
-        </div>
+  {/* Our Services */}
+  <div style={{ flex: "1 1 200px" }}>
+    <p style={{ fontSize: "clamp(12px, 1vw, 14px)", margin: "4px 0" }}>
+      Daily Drives
+    </p>
+    <p style={{ fontSize: "clamp(12px, 1vw, 14px)", margin: "4px 0" }}>
+      BookMyRideToday Hosts
+    </p>
+  </div>
+</div>
       </div>
     </div>
   );
 }
 
-const getInputStyle = (isMobile, isSmallMobile) => ({
+const getInputStyle = () => ({
   width: "100%",
-  padding: isSmallMobile ? "10px" : isMobile ? "11px" : "12px",
+  padding: "clamp(10px, 1.2vw, 12px)",
   marginBottom: "12px",
   border: "1px solid #ccc",
-  fontSize: isSmallMobile ? "13px" : isMobile ? "14px" : "16px",
+  fontSize: "clamp(13px, 1vw, 16px)",
   borderRadius: "6px",
 });
 
-const InfoItem = ({ title, text, isMobile }) => (
-  <div>
-    <h3 style={{ fontSize: isMobile ? "22px" : "30px", margin: 0 }}>{title}</h3>
-    <p style={{ margin: "5px 0 0", fontSize: isMobile ? "15px" : "18px" }}>
-      {text}
-    </p>
+const InfoItem = ({ title, text }) => (
+  <div style={{ marginBottom: "15px" }}>
+    <h3 style={{ fontSize: "clamp(22px, 2vw, 30px)", margin: 0 }}>{title}</h3>
+    <p style={{ margin: "5px 0 0", fontSize: "clamp(15px, 1.2vw, 18px)" }}>{text}</p>
   </div>
 );
+
 
 export default Landing;
