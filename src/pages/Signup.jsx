@@ -35,157 +35,35 @@ function Signup() {
   };
 
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        width: "100vw",
-        display: "flex",
-        flexDirection: "row",
-        fontFamily: "Segoe UI, sans-serif",
-        flexWrap: "wrap", // ⭐ Mobile par automatic stack hoga
-      }}
-    >
+    <div style={{ height: "100vh", width: "100vw", display: "flex", overflow: "hidden", fontFamily: "Segoe UI, sans-serif" }}>
       <Header />
-
-      {/* LEFT PANEL */}
-      <div
-        style={{
-          flex: 1,
-          minHeight: "100vh",
-          background: "linear-gradient(135deg,#0f5fb6,#1b87d6)",
-          color: "#fff",
-          padding: "clamp(20px,4vw,60px)",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          minWidth: "300px",
-        }}
-      >
-        <h2 style={{ margin: "0 0 12px 0", fontSize: "clamp(20px, 2.5vw, 28px)" }}>
-          Create your account
-        </h2>
-
-        <p style={{ fontSize: "clamp(12px,1.2vw,16px)", opacity: 0.95 }}>
-          Join BookMyRideToday to book rides quickly and enjoy a smooth travel experience.
-        </p>
-
-        <ul style={{ marginLeft: "18px", lineHeight: 1.6, fontSize: "clamp(12px,1vw,16px)" }}>
-          <li>Easy ride booking</li>
-          <li>Secure login system</li>
-          <li>Fast customer support</li>
-          <li>Compare and negotiate prices</li>
-          <li>Track your bookings</li>
-        </ul>
+      <div style={{ width: "46%", height: "100%", background: "linear-gradient(135deg,#0f5fb6 0%,#1b87d6 100%)", color: "#fff", padding: "40px 36px", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+        <div>
+          
+          <h2 style={{ margin: "0 0 12px 0", fontSize: "22px" }}>Create your account</h2>
+          <p style={{ fontSize: "14px", opacity: 0.95 }}>Join BookMyRideToday to book rides quickly and enjoy a smooth travel experience.</p>
+          <ul style={{ marginLeft: "18px", lineHeight: "1.6" }}>
+            <li>Easy ride booking</li>
+            <li>Secure login system</li>
+            <li>Fast customer support</li>
+            <li>Compare and negotiate prices</li>
+            <li>Track your bookings</li>
+          </ul>
+        </div>
       </div>
-
-      {/* RIGHT SIGNUP FORM */}
-      <div
-        style={{
-          flex: 1,
-          minHeight: "100vh",
-          padding: "clamp(20px,4vw,50px)",
-          background: "#fff",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          minWidth: "300px",
-        }}
-      >
-        <div
-          style={{
-            width: "100%",
-            maxWidth: "350px",
-            padding: "20px",
-            background: "#fff",
-            border: "0.1px solid #ccc",
-            boxShadow: "0 8px 20px rgba(0,0,0,0.15)",
-            borderRadius: "8px",
-          }}
-        >
-          <h1
-            style={{
-              textAlign: "center",
-              fontSize: "clamp(28px,4vw,36px)",
-              fontWeight: "300",
-              lineHeight: "1.2",
-              marginBottom: "18px",
-            }}
-          >
-            Signup
-          </h1>
-
-          <form onSubmit={handleSignup} style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-            <label style={{ fontSize: "clamp(12px,1.2vw,14px)" }}>Full Name</label>
-            <input
-              type="text"
-              name="name"
-              placeholder="Enter your name..."
-              value={signupInfo.name}
-              onChange={handleChange}
-              style={{
-                width: "100%",
-                padding: "10px",
-                border: "1px solid #ccc",
-                borderRadius: "4px",
-                fontSize: "clamp(12px,1vw,14px)",
-              }}
-            />
-
-            <label style={{ fontSize: "clamp(12px,1.2vw,14px)" }}>Email</label>
-            <input
-              type="email"
-              name="email"
-              placeholder="Enter your email..."
-              value={signupInfo.email}
-              onChange={handleChange}
-              style={{
-                width: "100%",
-                padding: "10px",
-                border: "1px solid #ccc",
-                borderRadius: "4px",
-                fontSize: "clamp(12px,1vw,14px)",
-              }}
-            />
-
-            <label style={{ fontSize: "clamp(12px,1.2vw,14px)" }}>Password</label>
-            <input
-              type="password"
-              name="password"
-              placeholder="Enter your password..."
-              value={signupInfo.password}
-              onChange={handleChange}
-              style={{
-                width: "100%",
-                padding: "10px",
-                border: "1px solid #ccc",
-                borderRadius: "4px",
-                fontSize: "clamp(12px,1vw,14px)",
-              }}
-            />
-
-            <button
-              type="submit"
-              style={{
-                width: "100%",
-                padding: "12px",
-                border: "none",
-                borderRadius: "4px",
-                background: "#2b9af3",
-                color: "#fff",
-                fontWeight: "600",
-                cursor: "pointer",
-                fontSize: "clamp(14px,1.2vw,16px)",
-              }}
-            >
-              Signup
-            </button>
-
-            <div style={{ marginTop: "14px", fontSize: "clamp(12px,1vw,14px)", textAlign: "center" }}>
-              Already have an account?
-              <Link to="/login" style={{ color: "#2b9af3" }}> Login </Link>
-            </div>
+      <div style={{ width: "54%", height: "100%", padding: "42px 36px", background: "#fff", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
+        <div style={{ width: "100%", maxWidth: "300px", padding: "10px 25px", background: "#fff", border: ".1px solid #ccc", boxShadow: "0 8px 20px rgba(0,0,0,0.15)", marginTop: "-20px" }}>
+          <h1 style={{ textAlign: "center", fontSize: "36px", fontWeight: "300", lineHeight: "46px", WebkitFontSmoothing: "antialiased", marginBottom: "18px" }}>Signup</h1>
+          <form onSubmit={handleSignup}>
+            <label style={{ fontSize: "14px" }}>Full Name</label>
+            <input type="text" name="name" placeholder="Enter your name..." value={signupInfo.name} onChange={handleChange} style={{ width: "100%", padding: "10px", margin: "8px 0 14px 0", border: "1px solid #ccc", borderRadius: "4px" }} />
+            <label style={{ fontSize: "14px" }}>Email</label>
+            <input type="email" name="email" placeholder="Enter your email..." value={signupInfo.email} onChange={handleChange} style={{ width: "100%", padding: "10px", margin: "8px 0 14px 0", border: "1px solid #ccc", borderRadius: "4px" }} />
+            <label style={{ fontSize: "14px" }}>Password</label>
+            <input type="password" name="password" placeholder="Enter your password..." value={signupInfo.password} onChange={handleChange} style={{ width: "100%", padding: "10px", margin: "8px 0 20px 0", border: "1px solid #ccc", borderRadius: "4px" }} />
+            <button type="submit" style={{ width: "100%", padding: "11px", border: "none", borderRadius: "4px", background: "#2b9af3", color: "#fff", fontWeight: "600", cursor: "pointer" }}>Signup</button>
+            <div style={{ marginTop: "14px", fontSize: "13px", textAlign: "center" }}>Already have an account? <Link to="/login" style={{ color: "#2b9af3" }}>Login</Link></div>
           </form>
-
           <ToastContainer />
         </div>
       </div>
