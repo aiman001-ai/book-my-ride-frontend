@@ -299,35 +299,48 @@ function Landing() {
   }}
 >
   {/* Info items */}
+
+<h1
+                        style={{
+                            fontSize: isMobile ? "28px" : "44px",
+                            margin: 0,
+                            fontWeight: "700",
+                            lineHeight: "1.2",
+                        }}
+                    >
+                        Best Car on Rent Services
+                        <br />
+                        in India.
+                    </h1>
+                    
+                    {/* Key SEO and value proposition statement */}
+                    <p
+                        style={{
+                            fontSize: isMobile ? "16px" : "20px",
+                            margin: "10px 0 20px",
+                            fontWeight: "400",
+                        }}
+                    >
+                        **Book My Ride Today** connects riders with local hosts for **affordable car rentals**. Compare prices, negotiate deals, and book your next trip with confidence.
+                    </p>
+
+                    {/* Quick Bullet Points (Replaces InfoItem for better scannability) */}
+                    <ul style={{ listStyle: "disc", paddingLeft: isMobile ? "20px" : "25px", margin: 0 }}>
+                        <li style={{ fontSize: isMobile ? "14px" : "18px", marginBottom: "8px" }}>Free platform for Riders and Hosts.</li>
+                        <li style={{ fontSize: isMobile ? "14px" : "18px", marginBottom: "8px" }}>Compare and negotiate **Car Rental** prices.</li>
+                        <li style={{ fontSize: isMobile ? "14px" : "18px", marginBottom: "8px" }}>24/7 Instant Support & Ride Assurance.</li>
+                    </ul>
+
   <InfoItem
     title="Why BookMyRideToday?"
     text="BookMyRideToday is a completely free platform for both riders and hosts. Riders can submit their booking requests and interact with multiple hosts to compare and negotiate ride prices before confirming their trip. Hosts can sign up, log in, and access the booking list to efficiently manage their rides. This ensures a flexible, transparent, and seamless experience for everyone on the platform."
     isMobile={isMobile}
   />
   
-  <InfoItem
-    title="Top-Rated Cars"
-    text="Premium, well-maintained vehicles for every journey"
-    isMobile={isMobile}
-  />
+  
+ 
 
-  <InfoItem
-    title="Freedom to Explore"
-    text="Go anywhere, anytime with flexible trip options"
-    isMobile={isMobile}
-  />
-
-  <InfoItem
-    title="Ride Assurance"
-    text="Fully sanitized cars with complete safety coverage"
-    isMobile={isMobile}
-  />
-
-  <InfoItem
-    title="Instant Support"
-    text="Quick help from our dedicated travel experts"
-    isMobile={isMobile}
-  />
+ 
 </div>
 
       </div>
