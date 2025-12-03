@@ -5,7 +5,6 @@ import { ToastContainer } from "react-toastify";
 import { handleError, handleSuccess, BASE_URL } from "../utils";
 import "../index.css";
 
-import Header from "../components/Header";
 
 function Login() {
   const [loginInfo, setLoginInfo] = useState({ email: "", password: "" });
@@ -52,8 +51,6 @@ function Login() {
         flexDirection: isMobile ? "column-reverse" : "row",
       }}
     >
-      <Header />
-
       {/* LEFT INFO PANEL */}
       <div
         style={{
@@ -89,7 +86,7 @@ function Login() {
           width: isMobile ? "100%" : "54%",
           minHeight: isMobile ? "58vh" : "100%",
           padding: "42px 36px",
-          background: "#fff",
+          background: "#742626ff",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",

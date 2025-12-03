@@ -1,16 +1,17 @@
+/* === ALL IMPORTS MUST BE AT THE VERY TOP === */
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap');
 @import "tailwindcss";
 
 /* ==== GLOBAL SCROLLBAR FIX (Zoomcar style) ==== */
-
 html, body {
   margin: 0;
   padding: 0;
-  overflow-y: auto;        /* scroll nahi, auto hoga */
+  overflow-y: auto;        /* scroll auto hoga */
   width: 100%;
   height: 100%;
 }
 
-/* Chrome, Edge, Safari – scrollbar complete hide */
+/* Chrome, Edge, Safari – scrollbar hide */
 body::-webkit-scrollbar {
   display: none !important;
 }
@@ -19,9 +20,3 @@ body::-webkit-scrollbar {
 body {
   scrollbar-width: none;
 }
-/* Angelina Font Import */
-
-
-/* frontend/src/index.css ke top me add karo */
-@import url('https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap');
-

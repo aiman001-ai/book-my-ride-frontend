@@ -5,9 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && npm run remove-header",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "remove-header": "sed -i '1d' dist/index.html"
   },
   "dependencies": {
     "react": "^19.2.0",
