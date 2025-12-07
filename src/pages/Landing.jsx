@@ -66,6 +66,13 @@ function Landing() {
     if (loading) return;
     setLoading(true);
 
+     if (!formData.date || !formData.time) {
+    handleError("Please select date and time");
+    setLoading(false);
+    return;
+  }
+  
+
     try {
       const res = await fetch(`${BASE_URL}/rent/create`, {
         method: "POST",
