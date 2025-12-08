@@ -82,6 +82,8 @@ function Signup() {
         onSuccess: responseGoogle,
         onError: responseGoogle, // onError is usually also handled by responseGoogle
         flow: "auth-code",
+         ux_mode: "popup",            // ⭐ mobile fix
+    redirect_uri: "postmessage", // ⭐ backend match
     });
 
     // --- ✅ GOOGLE BUTTON STYLES ---
