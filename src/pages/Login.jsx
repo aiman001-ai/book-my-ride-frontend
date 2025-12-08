@@ -74,9 +74,8 @@ function Login() {
         onSuccess: responseGoogle,
         onError: responseGoogle,
         flow: "auth-code", // Important for security
-        ux_mode: "popup",       // ⭐ MUST for mobile browsers
-    redirect_uri: "postmessage",  // ⭐ MUST for mobile Google OAuth
-    });
+    ux_mode: isMobile ? "redirect" : "popup",
+});
 
     // --- GOOGLE BUTTON STYLES ---
     const googleButtonStyle = {
