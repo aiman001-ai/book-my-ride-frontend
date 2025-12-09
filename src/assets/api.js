@@ -3,7 +3,7 @@ import axios from 'axios';
 
 // baseURL को लोकलहोस्ट से लाइव डोमेन पर बदला गया
 const api = axios.create({
-    baseURL: 'https://bookmyridetoday.co.in/auth'
+    baseURL: 'https://book-my-ride-3.onrender.com/auth'
 });
 
 // Changed to POST request sending code in body

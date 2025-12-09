@@ -309,9 +309,9 @@ function Landing() {
 
 <h1
                         style={{
-                            fontSize: isMobile ? "28px" : "44px",
+                            fontSize: isMobile ? "20px" : "36px",
                             margin: 0,
-                            fontWeight: "700",
+                            fontWeight: "400",
                             lineHeight: "1.2",
                         }}
                     >
@@ -333,9 +333,7 @@ function Landing() {
 
                     {/* Quick Bullet Points (Replaces InfoItem for better scannability) */}
                     <ul style={{ listStyle: "disc", paddingLeft: isMobile ? "20px" : "25px", margin: 0 }}>
-                        <li style={{ fontSize: isMobile ? "14px" : "18px", marginBottom: "8px" }}>Free platform for Riders and Hosts.</li>
-                        <li style={{ fontSize: isMobile ? "14px" : "18px", marginBottom: "8px" }}>Compare and negotiate **Car Rental** prices.</li>
-                        <li style={{ fontSize: isMobile ? "14px" : "18px", marginBottom: "8px" }}>24/7 Instant Support & Ride Assurance.</li>
+                        
                     </ul>
 
   <InfoItem
