@@ -9,6 +9,7 @@ html, body {
   overflow-y: auto;        /* scroll auto hoga */
   width: 100%;
   height: 100%;
+  background: #000; 
 }
 
 /* Chrome, Edge, Safari – scrollbar hide */
@@ -19,4 +20,19 @@ body::-webkit-scrollbar {
 /* Firefox – scrollbar hide */
 body {
   scrollbar-width: none;
+}
+
+
+
+@font-face {
+  font-family: 'Nabla';
+  src: url('/fonts/Nabla-Regular-VariableFont_EDPT,EHLT.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Gloria';
+  src: url('/fonts/GloriaHallelujah-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
 }

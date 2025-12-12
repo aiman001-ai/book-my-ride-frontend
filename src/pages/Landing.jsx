@@ -32,625 +32,683 @@ import khajuraho from "../assets/cities/khajuraho.jpg";
 import leh from "../assets/cities/leh.jpg";
 import kodaikanal from "../assets/cities/kodaikanal.jpg";
 
-const BASE_URL = "https://book-my-ride-3.onrender.com";
+const BASE_URL = "https://bookmyridetoday.co.in";
 
 function Landing() {
-  const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
-  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
-  useEffect(() => {
-    const handleResize = () => setScreenWidth(window.innerWidth);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+  useEffect(() => {
+    const handleResize = () => setScreenWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
-  // 🔥 FIX: isMobile breakpoint increased from 900px to 1200px 
-  // to ensure column layout and correct text size in 'Desktop Site' mobile view.
-  const isMobile = screenWidth <= 1200; 
-  const isSmallMobile = screenWidth <= 500;
+  // 🔥 FIX: isMobile breakpoint increased from 900px to 1200px 
+  // to ensure column layout and correct text size in 'Desktop Site' mobile view.
+  const isMobile = screenWidth <= 1200; 
+  const isSmallMobile = screenWidth <= 500;
 
-  const [formData, setFormData] = useState({
-    name: "",
-    contact: "",
-    numberOfPassengers: "",
-    cityPickPoint: "",
-    cityDropPoint: "",
-    date: "",
-    time: "",
-  });
+  // 🔥 SEO Implementation: Update Title and Meta Description
+  useEffect(() => {
+    document.title = "BookMyRide: Self-Drive Car on Rent | Rent a Car in India";
+    
+    let metaDescriptionTag = document.querySelector('meta[name="description"]');
+    if (!metaDescriptionTag) {
+      metaDescriptionTag = document.createElement('meta');
+      metaDescriptionTag.name = 'description';
+      document.getElementsByTagName('head')[0].appendChild(metaDescriptionTag);
+    }
+    metaDescriptionTag.content = "Rent a car in India for self-drive, hourly, or outstation trips. Book My Ride Today offers the most affordable and flexible car on rent service. Compare prices and book instantly.";
+  }, []);
 
-  const handleChange = (e) =>
-    setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (loading) return;
-    setLoading(true);
+  const [formData, setFormData] = useState({
+    name: "",
+    contact: "",
+    numberOfPassengers: "",
+    cityPickPoint: "",
+    cityDropPoint: "",
+    date: "",
+    time: "",
+  });
 
-     if (!formData.date || !formData.time) {
-    handleError("Please select date and time");
-    setLoading(false);
-    return;
-  }
-  
+  const handleChange = (e) =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
 
-    try {
-      const res = await fetch(`${BASE_URL}/rent/create`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (loading) return;
+    setLoading(true);
 
-      const data = await res.json();
+      if (!formData.date || !formData.time) {
+    handleError("Please select date and time");
+    setLoading(false);
+    return;
+    }
+  
 
-      if (data.success) {
-        handleSuccess(data.message);
-        setFormData({
-          name: "",
-          contact: "",
-          numberOfPassengers: "",
-          cityPickPoint: "",
-          cityDropPoint: "",
-          date: "",
-          time: "",
-        });
-        setTimeout(() => navigate("/"), 800);
-      } else {
-        handleError(data.message);
-      }
-    } catch (err) {
-      handleError("Something went wrong");
-    }
-    setLoading(false);
-  };
+    try {
+      const res = await fetch(`${BASE_URL}/rent/create`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
 
-  // 🔥 Cities array with imported images
-  const cities = [
-    { name: "Delhi", img: delhiImg },
-    { name: "Mumbai", img: mumbaiImg },
-    { name: "Bangalore", img: bangaloreImg },
-    { name: "Chennai", img: chennaiImg },
-    { name: "Hyderabad", img: hyderabadImg },
-    { name: "Goa", img: goaImg },
-    { name: "Jaipur", img: jaipurImg },
-    { name: "Kolkata", img: kolkataImg },
-    { name: "Pune", img: puneImg },
-    { name: "Ahmedabad", img: ahmedabadImg },
-    { name: "Udaipur", img: udaipur },
-    { name: "Shimla", img: shimla },
-    { name: "Manali", img: manali },
-    { name: "Rishikesh", img: rishikesh },
-    { name: "Varanasi", img: varanasi },
-    { name: "Amritsar", img: amritsar },
-    { name: "Coorg", img: coorg },
-    { name: "Munnar", img: munnar },
-    { name: "Darjeeling", img: darjeeling },
-    { name: "Ooty", img: ooty },
-    { name: "Jaisalmer", img: jaisalmer },
-    { name: "Khajuraho", img: khajuraho },
-    { name: "Leh", img: leh },
-    { name: "Kodaikanal", img: kodaikanal },
-  ];
+      const data = await res.json();
 
-  return (
-    <div style={{ minHeight: "100vh", background: "#ececec" }}>
-      {/* HEADER */}
-      <header
-        style={{
-          position: "fixed",
-          top: 0,
-          width: "100%",
-          height: "65px",
-          padding: "0 20px",
-          background: "#0f0e0eff",
-          borderBottom: "1px solid #ddd",
-          boxShadow: "0 2px 5px rgba(0,0,0,0.1)",
-          color: "#fff",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          zIndex: 1000,
-        }}
-      >
-        <button
-          onClick={() => navigate("/login")}
-          style={{
-            background: "#e0d2d2ff",
-            color: "#003f03ff",
-            border: "none",
-            padding: isMobile ? "6px 14px" : "8px 20px",
-            fontSize: isMobile ? "14px" : "16px",
-            borderRadius: "6px",
-            cursor: "pointer",
-            fontWeight: "600",
-          }}
-        >
-          Login / Signup
-        </button>
-      </header>
+      if (data.success) {
+        handleSuccess(data.message);
+        setFormData({
+          name: "",
+          contact: "",
+          numberOfPassengers: "",
+          cityPickPoint: "",
+          cityDropPoint: "",
+          date: "",
+          time: "",
+        });
+        setTimeout(() => navigate("/"), 800);
+      } else {
+        handleError(data.message);
+      }
+    } catch (err) {
+      handleError("Something went wrong");
+    }
+    setLoading(false);
+  };
 
-      {/* MAIN LAYOUT */}
-      <div
-        style={{
-          marginTop: "50px",
-          display: "flex",
-          // FIX isMobile handles the switch to column layout for small screens and desktop site view
-          flexDirection: isMobile ? "column" : "row",
-          width: "100%",
-          height: isMobile ? "auto" : "calc(100vh - 80px)",
-          border: "1px solid #e0e0e0",
-          borderRadius: "12px",
-          boxShadow: "0px 4px 18px rgba(0,0,0,0.12)",
-          background: "#fff",
-        }}
-      >
-        {/* LEFT FORM BOX */}
-        <div
-          style={{
-            width: isMobile ? "100%" : "40%",
-            background: "#fff",
-            padding: isMobile ? "18px" : "30px",
-            boxShadow: "0 0 10px rgba(0,0,0,0.2)",
-          }}
-        >
-          <h2
-            style={{
-              fontSize: isSmallMobile ? "16px" : isMobile ? "18px" : "20px",
-              marginBottom: "15px",
-            }}
-          >
-            Book My Ride Today
-          </h2>
+  // 🔥 Cities array with imported images
+  const cities = [
+    { name: "Delhi", img: delhiImg },
+    { name: "Mumbai", img: mumbaiImg },
+    { name: "Bangalore", img: bangaloreImg },
+    { name: "Chennai", img: chennaiImg },
+    { name: "Hyderabad", img: hyderabadImg },
+    { name: "Goa", img: goaImg },
+    { name: "Jaipur", img: jaipurImg },
+    { name: "Kolkata", img: kolkataImg },
+    { name: "Pune", img: puneImg },
+    { name: "Ahmedabad", img: ahmedabadImg },
+    { name: "Udaipur", img: udaipur },
+    { name: "Shimla", img: shimla },
+    { name: "Manali", img: manali },
+    { name: "Rishikesh", img: rishikesh },
+    { name: "Varanasi", img: varanasi },
+    { name: "Amritsar", img: amritsar },
+    { name: "Coorg", img: coorg },
+    { name: "Munnar", img: munnar },
+    { name: "Darjeeling", img: darjeeling },
+    { name: "Ooty", img: ooty },
+    { name: "Jaisalmer", img: jaisalmer },
+    { name: "Khajuraho", img: khajuraho },
+    { name: "Leh", img: leh },
+    { name: "Kodaikanal", img: kodaikanal },
+  ];
 
-          <form onSubmit={handleSubmit}>
-            <input
-              name="name"
-              placeholder="Full Name"
-              value={formData.name}
-              onChange={handleChange}
-              required
-              style={getInputStyle(isMobile, isSmallMobile)}
-            />
-            <input
-              name="contact"
-              placeholder="Contact Number"
-              value={formData.contact}
-              onChange={handleChange}
-              required
-              style={getInputStyle(isMobile, isSmallMobile)}
-            />
-            <input
-              name="numberOfPassengers"
-              placeholder="Number of Passengers"
-              type="number"
-              value={formData.numberOfPassengers}
-              onChange={handleChange}
-              required
-              style={getInputStyle(isMobile, isSmallMobile)}
-            />
-            <input
-              name="cityPickPoint"
-              placeholder="City Pick Point"
-              value={formData.cityPickPoint}
-              onChange={handleChange}
-              required
-              style={getInputStyle(isMobile, isSmallMobile)}
-            />
-            <input
-              name="cityDropPoint"
-              placeholder="City Drop Point"
-              value={formData.cityDropPoint}
-              onChange={handleChange}
-              required
-              style={getInputStyle(isMobile, isSmallMobile)}
-            />
-            <div
-              style={{
-                display: "flex",
-                flexDirection: isMobile ? "column" : "row",
-                gap: "10px",
-              }}
-            >
-              <input
-                name="date"
-                type="date"
-                value={formData.date}
-                onChange={handleChange}
-                required
-                style={getInputStyle(isMobile, isSmallMobile)}
-              />
-              <input
-                name="time"
-                type="time"
-                value={formData.time}
-                onChange={handleChange}
-                required
-                style={getInputStyle(isMobile, isSmallMobile)}
-              />
-            </div>
+  return (
+    <div style={{ minHeight: "100vh",  }}>
+      {/* HEADER */}
+      <header
+        style={{
+          position: "fixed",
+          top: 0,
+          width: "100%",
+          height: "65px",
+          padding: "0 20px",
+          background: "#0f0e0eff",
+          borderBottom: "1px solid #ddd",
+          boxShadow: "0 2px 5px rgba(0,0,0,0.1)",
+          color: "#fff",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          zIndex: 1000,
+        }}
+      >
+        <button
+          onClick={() => navigate("/login")}
+          style={{
+            background: "#e0d2d2ff",
+            color: "#003f03ff",
+            border: "none",
+            padding: isMobile ? "6px 14px" : "8px 20px",
+            fontSize: isMobile ? "14px" : "16px",
+            borderRadius: "6px",
+            cursor: "pointer",
+            fontWeight: "600",
+          }}
+        >
+          Login / Signup
+        </button>
+      </header>
 
-            <button
-              type="submit"
-              disabled={loading}
-              style={{
-                width: "100%",
-                padding: isSmallMobile ? "10px" : "14px",
-                background: "#00a86b",
-                color: "#fff",
-                border: "none",
-                borderRadius: "6px",
-                fontSize: isSmallMobile ? "14px" : "17px",
-                cursor: "pointer",
-                opacity: loading ? 0.6 : 1,
-                marginTop: "10px",
-              }}
-            >
-              {loading ? "Please wait..." : "Submit"}
-            </button>
-          </form>
-        </div>
+      {/* MAIN LAYOUT */}
+      <div
+        style={{
+          marginTop: "50px",
+          display: "flex",
+          // FIX isMobile handles the switch to column layout for small screens and desktop site view
+          flexDirection: isMobile ? "column" : "row",
+          width: "100%",
+          height: isMobile ? "auto" : "calc(100vh - 80px)",
+          
+          
+          boxShadow: "0px 4px 18px rgba(0,0,0,0.12)",
+          
+            
+        }}
+      >
+        {/* LEFT FORM BOX */}
+        <div
+          style={{
+            width: isMobile ? "100%" : "40%",
+          
+            padding: isMobile ? "18px" : "30px",
+            boxShadow: "0 0 10px rgba(0,0,0,0.2)",
+            
+    borderRight: "2px solid #e0e0e0",
 
-        {/* RIGHT GREEN BOX */}
-        <div
-  style={{
-    width: isMobile ? "100%" : "60%",
-    background: "#00a86b",
-    color: "#fff",
-    padding: isMobile ? "4px 19px 19px 19px" : "10px 30px 30px 30px",
- // slightly reduced padding for large screens
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "flex-start", // prevent vertical centering
-    gap: isMobile ? "7px" : "12px", // 🔥 FIX: "7x" changed to "7px"
-    textAlign: isMobile ? "center" : "left",
-    boxSizing: "border-box", // include padding in width
-    minHeight: "100%", // allows box to expand with content
-  }}
+    boxSizing: "border-box",
+    background: "transparent",
+          }}
+        >
+          <h2
+  style={{
+    fontSize: isSmallMobile ? "18px" : isMobile ? "20px" : "20px",
+    marginBottom: "8px",
+    color: "#fff",
+    textAlign: "center",
+    fontFamily: "Nabla, sans-serif", // 🔥 Add this line
+  }}
 >
-                    {/* Info items */}
+  Book My Ride 
+</h2>
 
-<h1
-                        style={{
-                            fontSize: isMobile ? "20px" : "36px",
-                            margin: 0,
-                            fontWeight: "400",
-                            lineHeight: "1.2",
-                        }}
-                    >
-                        Best Car on Rent Services
-                        <br />
-                        in India.
-                    </h1>
-                    
-                    {/* Key SEO and value proposition statement */}
-                    <p
-                        style={{
-                            fontSize: isMobile ? "16px" : "20px",
-                            margin: "10px 0 20px",
-                            fontWeight: "400",
-                        }}
-                    >
-                        **Book My Ride Today** connects riders with local hosts for **affordable car rentals**. Compare prices, negotiate deals, and book your next trip with confidence.
-                    </p>
+          <form onSubmit={handleSubmit}>
+            <input
+              name="name"
+              placeholder="Full Name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+              style={getInputStyle(isMobile, isSmallMobile)}
+            />
+            <input
+              name="contact"
+              placeholder="Contact Number"
+              value={formData.contact}
+              onChange={handleChange}
+              required
+              style={getInputStyle(isMobile, isSmallMobile)}
+            />
+            <input
+              name="numberOfPassengers"
+              placeholder="Number of Passengers"
+              type="number"
+              value={formData.numberOfPassengers}
+              onChange={handleChange}
+              required
+              style={getInputStyle(isMobile, isSmallMobile)}
+            />
+            <input
+              name="cityPickPoint"
+              placeholder="City Pick Point"
+              value={formData.cityPickPoint}
+              onChange={handleChange}
+              required
+              style={getInputStyle(isMobile, isSmallMobile)}
+            />
+            <input
+              name="cityDropPoint"
+              placeholder="City Drop Point"
+              value={formData.cityDropPoint}
+              onChange={handleChange}
+              required
+              style={getInputStyle(isMobile, isSmallMobile)}
+            />
+            <div
+              style={{
+                display: "flex",
+                flexDirection: isMobile ? "column" : "row",
+                gap: "10px",
+              }}
+            >
+              <input
+                name="date"
+                type="date"
+                value={formData.date}
+                onChange={handleChange}
+                required
+                style={getInputStyle(isMobile, isSmallMobile)}
+              />
+              <input
+                name="time"
+                type="time"
+                value={formData.time}
+                onChange={handleChange}
+                required
+                style={getInputStyle(isMobile, isSmallMobile)}
+              />
+            </div>
 
-                    {/* Quick Bullet Points (Replaces InfoItem for better scannability) */}
-                    <ul style={{ listStyle: "disc", paddingLeft: isMobile ? "20px" : "25px", margin: 0 }}>
-                        
-                    </ul>
+            <button
+              type="submit"
+              disabled={loading}
+              style={{
+                width: "100%",
+                padding: isSmallMobile ? "10px" : "14px",
+                background: "#00a86b",
+                color: "#fff",
+                border: "none",
+                borderRadius: "6px",
+                fontSize: isSmallMobile ? "14px" : "17px",
+                cursor: "pointer",
+                opacity: loading ? 0.6 : 1,
+                marginTop: "10px",
+              }}
+            >
+              {loading ? "Please wait..." : "Submit"}
+            </button>
+          </form>
+        </div>
 
-  <InfoItem
-    title="Why BookMyRideToday?"
-    text="BookMyRideToday is a completely free platform for both riders and hosts. Riders can submit their booking requests and interact with multiple hosts to compare and negotiate ride prices before confirming their trip. Hosts can sign up, log in, and access the booking list to efficiently manage their rides. This ensures a flexible, transparent, and seamless experience for everyone on the platform."
-    isMobile={isMobile}
-  />
-  
-  
- 
+ 
 
- 
+        {/* RIGHT GREEN BOX */}
+       <div
+  style={{
+    width: isMobile ? "100%" : "60%",
+    color: "#9c9199ff",
+    padding: isMobile ? "4px 19px 19px 19px" : "10px 30px 30px 30px",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    gap: isMobile ? "7px" : "12px",
+    textAlign: isMobile ? "center" : "left",
+    boxSizing: "border-box",
+    minHeight: "100%",
+
+    // 🔥 COMMON TEXT STYLE FOR ENTIRE SECTION
+    fontFamily: "'Gloria Hallelujah', cursive",
+    fontWeight: "10",
+    fontSize: isMobile ? "15px" : "19px",
+  }}
+>
+  {/* Heading */}
+  <h1
+    style={{
+      fontSize: isMobile ? "22px" : "38px",
+      margin: 0,
+      fontWeight: "10",
+      lineHeight: "1.2",
+      color: "#66030bff",
+    }}
+  >
+    <strong>Book MY Ride</strong> Best <strong>Car on Rent</strong> Services
+    <br />
+    in India.
+  </h1>
+
+  {/* Paragraph */}
+  <p
+    style={{
+      margin: "10px 0 20px",
+      fontWeight: "10",
+    }}
+  >
+    <strong>Book My Ride</strong> connects riders with local hosts for
+    <strong> affordable car rentals</strong>. Compare prices, negotiate deals,
+    and book your next trip with confidence.
+  </p>
+
+  {/* Bullet List */}
+  <ul
+    style={{
+      listStyle: "disc",
+      paddingLeft: isMobile ? "20px" : "25px",
+      margin: -6,
+    }}
+  >
+    <li style={{ marginBottom: "1px" }}>
+      <strong>Car-On-Rent</strong> Car Rentals for ultimate freedom.
+    </li>
+
+    <li style={{ marginBottom: "1px" }}>
+      Hourly, Daily, and Weekly <strong>Flexible Rental</strong> Plans.
+    </li>
+
+    <li style={{ marginBottom: "1px" }}>
+      Wide range of cars available for <strong>rent a car</strong> across 20+ cities.
+    </li>
+
+    <li style={{ marginBottom: "1px" }}>
+      No hidden charges and <strong>zero commission</strong> platform.
+    </li>
+  </ul>
+
+  {/* InfoItem */}
+  <InfoItem
+   title={
+    <span style={{ color: "#66030bff" }}>About Us</span>
+  }
+  text={
+    <span>
+      BookMyRide is a completely free platform for both riders and hosts.
+      Riders can submit their booking requests and interact with multiple hosts
+      to compare and negotiate ride prices before confirming their trip.
+      Hosts can sign up, log in, and access the booking list to efficiently
+      manage their rides. This ensures a flexible, transparent, and seamless
+      experience for everyone on the platform.
+    </span>
+    }
+    isMobile={isMobile}
+  />
 </div>
 
-      </div>
 
-      {/* WHY BOOKMYRIDE SECTION - Dark Mode Style */}
-      <div
-        style={{
-          width: "100%",
-          background: "#525050ff", // Dark Background
-          padding: isMobile ? "30px 20px" : "60px 60px",
-          color: "#fff", // White Text
-        }}
-      >
-        <h2
-          style={{
-            fontSize: isMobile ? "22px" : "30px",
-            fontWeight: "600",
-            marginBottom: "30px",
-            textAlign: isMobile ? "center" : "left",
-            color: "#f1f1f1",
-          }}
-        >
-          Why BookMyRideToday?
-        </h2>
+      </div>
 
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: isMobile ? "1fr 1fr" : "1fr 1fr 1fr 1fr",
-            gap: "20px",
-          }}
-        >
-          {/* Item 1 */}
-          <div
-            style={{
-              background: "#1f1f1f",
-              padding: "20px",
-              borderRadius: "12px",
-              textAlign: "center",
-              border: "1px solid #2a2a2a",
-              boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
-            }}
-          >
-            <img
-              src="https://cdn-icons-png.flaticon.com/512/3500/3500827.png"
-              alt="Hassle Free"
-              style={{ height: "60px", marginBottom: "10px" }}
-            />
-            <h3 style={{ fontSize: "20px", marginBottom: "5px", color: "#fff" }}>
-              100%
-            </h3>
-            <p style={{ fontSize: "15px", color: "#cfcfcf" }}>
-              Hassle Free Secured Trip
-            </p>
-          </div>
+      {/* WHY BOOKMYRIDE SECTION - Dark Mode Style */}
+      <div
+        style={{
+          width: "100%",
+          background: "#525050ff", // Dark Background
+          padding: isMobile ? "30px 20px" : "60px 60px",
+          color: "#fff", // White Text
+        }}
+      >
+        <h2
+          style={{
+            fontSize: isMobile ? "22px" : "30px",
+            fontWeight: "600",
+            marginBottom: "30px",
+            textAlign: isMobile ? "center" : "left",
+            color: "#f1f1f1",
+          }}
+        >
+          Why BookMyRideToday?
+        </h2>
 
-          {/* Item 2 */}
-          <div
-            style={{
-              background: "#5a2f43ff",
-              padding: "20px",
-              borderRadius: "12px",
-              textAlign: "center",
-              border: "1px solid #2a2a2a",
-              boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
-            }}
-          >
-            <img
-              src="https://cdn-icons-png.flaticon.com/512/3208/3208754.png"
-              alt="Cars"
-              style={{ height: "60px", marginBottom: "10px" }}
-            />
-            <h3 style={{ fontSize: "20px", marginBottom: "5px", color: "#fff" }}>
-              25000+
-            </h3>
-            <p style={{ fontSize: "15px", color: "#cfcfcf" }}>
-              Quality cars in the city
-            </p>
-          </div>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: isMobile ? "1fr 1fr" : "1fr 1fr 1fr 1fr",
+            gap: "20px",
+          }}
+        >
+          {/* Item 1 */}
+          <div
+            style={{
+              background: "#1f1f1f",
+              padding: "20px",
+              borderRadius: "12px",
+              textAlign: "center",
+              border: "1px solid #2a2a2a",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
+            }}
+          >
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/3500/3500827.png"
+              alt="Hassle Free"
+              style={{ height: "60px", marginBottom: "10px" }}
+            />
+            <h3 style={{ fontSize: "20px", marginBottom: "5px", color: "#fff" }}>
+              100%
+            </h3>
+            <p style={{ fontSize: "15px", color: "#cfcfcf" }}>
+              Hassle Free Secured Trip
+            </p>
+          </div>
 
-          {/* Item 3 */}
-          <div
-            style={{
-              background: "#5a2f43ff",
-              padding: "20px",
-              borderRadius: "12px",
-              textAlign: "center",
-              border: "1px solid #2a2a2a",
-              boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
-            }}
-          >
-            <img
-              src="https://cdn-icons-png.flaticon.com/512/854/854878.png"
-              alt="Delivery"
-              style={{ height: "60px", marginBottom: "10px" }}
-            />
-            <h3 style={{ fontSize: "20px", marginBottom: "5px", color: "#fff" }}>
-              Delivery
-            </h3>
-            <p style={{ fontSize: "15px", color: "#cfcfcf" }}>
-              Anywhere, Anytime
-            </p>
-          </div>
+          {/* Item 2 */}
+          <div
+            style={{
+              background: "#5a2f43ff",
+              padding: "20px",
+              borderRadius: "12px",
+              textAlign: "center",
+              border: "1px solid #2a2a2a",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
+            }}
+          >
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/3208/3208754.png"
+              alt="Cars"
+              style={{ height: "60px", marginBottom: "10px" }}
+            />
+            <h3 style={{ fontSize: "20px", marginBottom: "5px", color: "#fff" }}>
+              25000+
+            </h3>
+            <p style={{ fontSize: "15px", color: "#cfcfcf" }}>
+              Quality cars in the city
+            </p>
+          </div>
 
-          {/* Item 4 */}
-          <div
-            style={{
-              background: "#1f1f1f",
-              padding: "20px",
-              borderRadius: "12px",
-              textAlign: "center",
-              border: "1px solid #2a2a2a",
-              boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
-            }}
-          >
-            <img
-              src="https://cdn-icons-png.flaticon.com/512/854/854894.png"
-              alt="Unlimited"
-              style={{ height: "60px", marginBottom: "10px" }}
-            />
-            <h3 style={{ fontSize: "20px", marginBottom: "5px", color: "#fff" }}>
-              Endless
-            </h3>
-            <p style={{ fontSize: "15px", color: "#cfcfcf" }}>
-              Pay by hour, drive limitless
-            </p>
-          </div>
-        </div>
-      </div>
+          {/* Item 3 */}
+          <div
+            style={{
+              background: "#5a2f43ff",
+              padding: "20px",
+              borderRadius: "12px",
+              textAlign: "center",
+              border: "1px solid #2a2a2a",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
+            }}
+          >
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/854/854878.png"
+              alt="Delivery"
+              style={{ height: "60px", marginBottom: "10px" }}
+            />
+            <h3 style={{ fontSize: "20px", marginBottom: "5px", color: "#fff" }}>
+              Delivery
+            </h3>
+            <p style={{ fontSize: "15px", color: "#cfcfcf" }}>
+              Anywhere, Anytime
+            </p>
+          </div>
 
-      {/* BECOME A HOST SECTION - Solid Color + Signup Navigation */}
-      <div
-        style={{
-          width: "100%",
-          marginTop: "50px",
-          position: "relative",
-          background: "#00a86b",
-          height: isMobile ? "220px" : "350px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          color: "#fff",
-          textAlign: "center",
-          padding: "20px",
-        }}
-      >
-        {/* Text On Color */}
-        <div>
-          <h2 style={{ fontSize: isMobile ? "22px" : "34px", marginBottom: "10px" }}>
-            Become a Partner
-          </h2>
-          <p style={{ fontSize: isMobile ? "14px" : "18px", marginBottom: "20px" }}>
-            Earn money by sharing your car with trusted renters
-          </p>
+          {/* Item 4 */}
+          <div
+            style={{
+              background: "#1f1f1f",
+              padding: "20px",
+              borderRadius: "12px",
+              textAlign: "center",
+              border: "1px solid #2a2a2a",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
+            }}
+          >
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/854/854894.png"
+              alt="Unlimited"
+              style={{ height: "60px", marginBottom: "10px" }}
+            />
+            <h3 style={{ fontSize: "20px", marginBottom: "5px", color: "#fff" }}>
+              Endless
+            </h3>
+            <p style={{ fontSize: "15px", color: "#cfcfcf" }}>
+              Pay by hour, drive limitless
+            </p>
+          </div>
+        </div>
+      </div>
 
-          <button
-            onClick={() => navigate("/signup")}
-            style={{
-              background: "#fff",
-              color: "#00a86b",
-              border: "none",
-              padding: isMobile ? "10px 20px" : "14px 30px",
-              fontSize: isMobile ? "14px" : "18px",
-              borderRadius: "8px",
-              cursor: "pointer",
-              fontWeight: "600",
-            }}
-          >
-            Start Hosting
-          </button>
-        </div>
-      </div>
+      {/* BECOME A HOST SECTION - Solid Color + Signup Navigation */}
+      <div
+        style={{
+          width: "100%",
+          marginTop: "50px",
+          position: "relative",
+          background: "#00a86b",
+          height: isMobile ? "220px" : "350px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          color: "#fff",
+          textAlign: "center",
+          padding: "20px",
+        }}
+      >
+        {/* Text On Color */}
+        <div>
+          <h2 style={{ fontSize: isMobile ? "22px" : "34px", marginBottom: "10px" }}>
+            Become a Partner
+          </h2>
+          <p style={{ fontSize: isMobile ? "14px" : "18px", marginBottom: "20px" }}>
+            Earn money by sharing your car with trusted renters
+          </p>
 
-      {/* Cities Grid with imported images */}
-      <div
-        style={{
-          width: "100%",
-          background: "#fff",
-          padding: isMobile ? "25px 18px" : "50px 60px",
-        }}
-      >
-        <h2
-          style={{
-            fontSize: isMobile ? "22px" : "30px",
-            fontWeight: "600",
-            marginBottom: "25px",
-            textAlign: isMobile ? "center" : "left",
-          }}
-        >
-          Ride Around Popular Cities in India
-        </h2>
+          <button
+            onClick={() => navigate("/signup")}
+            style={{
+              background: "#fff",
+              color: "#00a86b",
+              border: "none",
+              padding: isMobile ? "10px 20px" : "14px 30px",
+              fontSize: isMobile ? "14px" : "18px",
+              borderRadius: "8px",
+              cursor: "pointer",
+              fontWeight: "600",
+            }}
+          >
+            Start Hosting
+          </button>
+        </div>
+      </div>
 
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: isMobile ? "1fr 1fr" : "1fr 1fr 1fr 1fr",
-            gap: "18px",
-          }}
-        >
-          {cities.map((city, index) => (
-            <div
-              key={index}
-              style={{
-                background: "#f2f2f2",
-                borderRadius: "8px",
-                cursor: "pointer",
-                overflow: "hidden",
-              }}
-            >
-              <img
-                src={city.img}
-                alt={city.name}
-                style={{
-                  width: "100%",
-                  height: "120px",
-                  objectFit: "cover",
-                }}
-              />
-              <div
-                style={{
-                  padding: "8px",
-                  textAlign: "center",
-                  fontSize: isMobile ? "15px" : "17px",
-                  fontWeight: 500,
-                }}
-              >
-                {city.name}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
+      {/* Cities Grid with imported images */}
+      <div
+        style={{
+          width: "100%",
+          background: "#fff",
+          padding: isMobile ? "25px 18px" : "50px 60px",
+        }}
+      >
+        <h2
+          style={{
+            fontSize: isMobile ? "22px" : "30px",
+            fontWeight: "600",
+            marginBottom: "25px",
+            textAlign: isMobile ? "center" : "left",
+          }}
+        >
+          Ride Around Popular Cities in India
+        </h2>
 
-      {/* 🔥🔥 ABOUT US SECTION (ADDED HERE) */}
-      <div
-        style={{
-          width: "100%",
-          background: "#0f0e0e",
-          color: "#fff",
-          padding: "50px 30px",
-          marginTop: "20px",
-          borderBottom: "1px solid rgba(255,255,255,0.2)",
-        }}
-      >
-        <h2 style={{ fontSize: "26px", marginBottom: "15px" }}>About Us</h2>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: isMobile ? "1fr 1fr" : "1fr 1fr 1fr 1fr",
+            gap: "18px",
+          }}
+        >
+          {cities.map((city, index) => (
+            <div
+              key={index}
+              style={{
+                background: "#f2f2f2",
+                borderRadius: "8px",
+                cursor: "pointer",
+                overflow: "hidden",
+              }}
+            >
+              <img
+                src={city.img}
+                alt={city.name}
+                style={{
+                  width: "100%",
+                  height: "120px",
+                  objectFit: "cover",
+                }}
+              />
+              <div
+                style={{
+                  padding: "8px",
+                  textAlign: "center",
+                  fontSize: isMobile ? "15px" : "17px",
+                  fontWeight: 500,
+                }}
+              >
+                {city.name}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
 
-        <p
-          style={{
-            fontSize: "16px",
-            lineHeight: "1.6",
-            opacity: 0.9,
-            fontFamily: "'Dancing Script', cursive",
-          }}
-        >
-          Founded in 2025 and headquartered in Najibabad, India, BookMyRideToday is a
-          leading marketplace for car sharing focused in India. The BookMyRideToday
-          community connects Hosts with Guests, offering affordable, smart, and
-          sustainable transportation solutions across the country.
-        </p>
+      {/* 🔥🔥 ABOUT US SECTION (ADDED HERE) */}
+      <div
+        style={{
+          width: "100%",
+          background: "#0f0e0e",
+          color: "#fff",
+          padding: "50px 30px",
+          marginTop: "20px",
+          borderBottom: "1px solid rgba(255,255,255,0.2)",
+        }}
+      >
+        <h2 style={{ fontSize: "26px", marginBottom: "15px" }}>About Us</h2>
 
-        {/* Columns */}
-        <div
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            marginTop: "30px",
-            gap: "40px",
-          }}
-        >
-          {/* Company */}
-          <div>
-            <p style={{ fontSize: "14px", margin: "4px 0" }}>Terms and Conditions</p>
-            <p style={{ fontSize: "14px", margin: "4px 0" }}>Privacy Policy</p>
-          </div>
+        <p
+          style={{
+            fontSize: "16px",
+            lineHeight: "1.6",
+            opacity: 0.9,
+            fontFamily: "'Dancing Script', cursive",
+          }}
+        >
+          Founded in 2025 and headquartered in Najibabad, India, BookMyRideToday is a
+          leading marketplace for car sharing focused in India. The BookMyRideToday
+          community connects Hosts with Guests, offering affordable, smart, and
+          sustainable transportation solutions across the country.
+        </p>
 
-          {/* Our Services */}
-          <div>
-            <p style={{ fontSize: "14px", margin: "4px 0" }}>Daily Drives</p>
-            <p style={{ fontSize: "14px", margin: "4px 0" }}>BookMyRideToday Hosts</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+        {/* Columns */}
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            marginTop: "30px",
+            gap: "40px",
+          }}
+        >
+          {/* Company */}
+          <div>
+            <p style={{ fontSize: "14px", margin: "4px 0" }}>Terms and Conditions</p>
+            <p style={{ fontSize: "14px", margin: "4px 0" }}>Privacy Policy</p>
+          </div>
+
+          {/* Our Services */}
+          <div>
+            <p style={{ fontSize: "14px", margin: "4px 0" }}>Daily Drives</p>
+            <p style={{ fontSize: "14px", margin: "4px 0" }}>BookMyRideToday Hosts</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 const getInputStyle = (isMobile, isSmallMobile) => ({
-  width: "100%",
-  padding: isSmallMobile ? "10px" : isMobile ? "11px" : "12px",
-  marginBottom: "12px",
-  border: "1px solid #ccc",
-  fontSize: isSmallMobile ? "13px" : isMobile ? "14px" : "16px",
-  borderRadius: "6px",
+  width: "100%",
+  padding: isSmallMobile ? "10px" : isMobile ? "11px" : "12px",
+  marginBottom: "12px",
+  border: "1px solid #ccc",
+background: "#c2a8a8ff",  
+  fontSize: isSmallMobile ? "13px" : isMobile ? "14px" : "16px",
+  borderRadius: "6px",
 });
 
 const InfoItem = ({ title, text, isMobile }) => (
-  <div>
-    <h3 style={{ fontSize: isMobile ? "22px" : "30px", margin: 0 }}>{title}</h3>
-    <p style={{ margin: "5px 0 0", fontSize: isMobile ? "15px" : "18px" }}>
-      {text}
-    </p>
-  </div>
+  <div>
+    <h3 style={{ fontSize: isMobile ? "22px" : "30px", margin: 0 }}>{title}</h3>
+    <p style={{ margin: "5px 0 0", fontSize: isMobile ? "15px" : "18px" }}>
+      {text}
+    </p>
+  </div>
 );
 
 export default Landing;
