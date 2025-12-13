@@ -610,6 +610,8 @@ backgroundPosition: "top, bottom",
           color: "#ffffff",
           textAlign: "center",
           padding: "20px",
+          
+          
 
            borderBottom: "1px solid transparent",
 

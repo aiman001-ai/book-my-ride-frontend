@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { handleError, handleSuccess, BASE_URL } from "../utils";
 import "../index.css";
-import Header from "../components/Header";
+
 import { useGoogleLogin } from "@react-oauth/google";
 import { googleAuth } from "../assets/api"; // Import API call
 import { FcGoogle } from "react-icons/fc";
@@ -106,7 +106,7 @@ function Login() {
                 flexDirection: isMobile ? "column-reverse" : "row",
             }}
         >
-            <Header />
+           
 
             {/* LEFT INFO PANEL */}
             <div
