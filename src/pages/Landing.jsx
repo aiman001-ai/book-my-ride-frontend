@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../index.css";
 
-import logo from "../assets/logo.png";
+
 import { handleError, handleSuccess } from "../utils";
 
 // 🔥 Import all city images
@@ -35,15 +35,56 @@ import kodaikanal from "../assets/cities/kodaikanal.jpg";
 const BASE_URL = "https://bookmyridetoday.co.in";
 
 function Landing() {
-  const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
+  // ---- Hooks ----
+const navigate = useNavigate();
+const [loading, setLoading] = useState(false);
 
-  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
-  useEffect(() => {
-    const handleResize = () => setScreenWidth(window.innerWidth);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+// Screen width
+const [screenWidth, setScreenWidth] = useState(
+  typeof window !== "undefined" ? window.innerWidth : 0
+);
+
+// Header hide on scroll
+const [prevScroll, setPrevScroll] = useState(0);
+const [hideHeader, setHideHeader] = useState(false);
+
+// ---- Effects ----
+// Handle resize
+useEffect(() => {
+  const handleResize = () => setScreenWidth(window.innerWidth);
+  window.addEventListener("resize", handleResize);
+  return () => window.removeEventListener("resize", handleResize);
+}, []);
+
+// Handle scroll
+useEffect(() => {
+  const handleScroll = () => {
+    const currentScroll = window.scrollY;
+
+    // Scroll down → hide header, Scroll up → show header
+    setHideHeader(currentScroll > prevScroll && currentScroll > 80);
+
+    setPrevScroll(currentScroll);
+  };
+
+  window.addEventListener("scroll", handleScroll);
+  return () => window.removeEventListener("scroll", handleScroll);
+}, [prevScroll]); // Problematic: instead, use functional update
+
+// ---- FIXED VERSION using functional update ----
+useEffect(() => {
+  const handleScroll = () => {
+    setPrevScroll((prev) => {
+      const currentScroll = window.scrollY;
+      setHideHeader(currentScroll > prev && currentScroll > 80);
+      return currentScroll;
+    });
+  };
+
+  window.addEventListener("scroll", handleScroll);
+  return () => window.removeEventListener("scroll", handleScroll);
+}, []);
+
 
   // 🔥 FIX: isMobile breakpoint increased from 900px to 1200px 
   // to ensure column layout and correct text size in 'Desktop Site' mobile view.
@@ -157,14 +198,15 @@ function Landing() {
           width: "100%",
           height: "65px",
           padding: "0 20px",
-          background: "#0f0e0eff",
-          borderBottom: "1px solid #ddd",
-          boxShadow: "0 2px 5px rgba(0,0,0,0.1)",
-          color: "#fff",
+          background: "#020202ff",
+          
+          
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
           zIndex: 1000,
+          transform: hideHeader ? "translateY(-100%)" : "translateY(0)",
+    transition: "transform 0.3s ease",
         }}
       >
         <button
@@ -187,6 +229,7 @@ function Landing() {
       {/* MAIN LAYOUT */}
       <div
         style={{
+          
           marginTop: "50px",
           display: "flex",
           // FIX isMobile handles the switch to column layout for small screens and desktop site view
@@ -195,7 +238,7 @@ function Landing() {
           height: isMobile ? "auto" : "calc(100vh - 80px)",
           
           
-          boxShadow: "0px 4px 18px rgba(0,0,0,0.12)",
+          
           
             
         }}
@@ -206,7 +249,7 @@ function Landing() {
             width: isMobile ? "100%" : "40%",
           
             padding: isMobile ? "18px" : "30px",
-            boxShadow: "0 0 10px rgba(0,0,0,0.2)",
+            
             
     borderRight: "2px solid #e0e0e0",
 
@@ -320,7 +363,7 @@ function Landing() {
        <div
   style={{
     width: isMobile ? "100%" : "60%",
-    color: "#9c9199ff",
+    color: "#ffffff",
     padding: isMobile ? "4px 19px 19px 19px" : "10px 30px 30px 30px",
     display: "flex",
     flexDirection: "column",
@@ -343,7 +386,7 @@ function Landing() {
       margin: 0,
       fontWeight: "10",
       lineHeight: "1.2",
-      color: "#66030bff",
+      color: "#f0061aff",
     }}
   >
     <strong>Book MY Ride</strong> Best <strong>Car on Rent</strong> Services
@@ -391,7 +434,7 @@ function Landing() {
   {/* InfoItem */}
   <InfoItem
    title={
-    <span style={{ color: "#66030bff" }}>About Us</span>
+    <span style={{ color: "#f0061aff" }}>About BookMyRide</span>
   }
   text={
     <span>
@@ -414,21 +457,38 @@ function Landing() {
       <div
         style={{
           width: "100%",
-          background: "#525050ff", // Dark Background
+          background: "transparent", // Dark Background
           padding: isMobile ? "30px 20px" : "60px 60px",
           color: "#fff", // White Text
+
+
+        borderTop: "1px solid transparent",
+borderBottom: "1px solid transparent",
+
+backgroundImage:
+  "linear-gradient(to right, transparent, #5b6cff, transparent), linear-gradient(to right, transparent, #5b6cff, transparent)",
+
+backgroundRepeat: "no-repeat, no-repeat",
+
+backgroundSize: "100% 1px, 100% 1px",
+
+backgroundPosition: "top, bottom",
+
+
         }}
       >
         <h2
-          style={{
-            fontSize: isMobile ? "22px" : "30px",
-            fontWeight: "600",
-            marginBottom: "30px",
-            textAlign: isMobile ? "center" : "left",
-            color: "#f1f1f1",
-          }}
+           style={{
+    width: "100%",
+    textAlign: "center",
+    fontSize: isMobile ? "22px" : "38px",
+    fontWeight: "10",
+    marginBottom: "30px",
+    color: "#f0061aff",
+    fontFamily: "'Gloria Hallelujah', cursive",
+  }}
         >
-          Why BookMyRideToday?
+          Why BookMyRide?
         </h2>
 
         <div
@@ -441,7 +501,7 @@ function Landing() {
           {/* Item 1 */}
           <div
             style={{
-              background: "#1f1f1f",
+              background: "#0a0a24ff",
               padding: "20px",
               borderRadius: "12px",
               textAlign: "center",
@@ -465,7 +525,7 @@ function Landing() {
           {/* Item 2 */}
           <div
             style={{
-              background: "#5a2f43ff",
+              background: "#142e13ff",
               padding: "20px",
               borderRadius: "12px",
               textAlign: "center",
@@ -489,7 +549,7 @@ function Landing() {
           {/* Item 3 */}
           <div
             style={{
-              background: "#5a2f43ff",
+              background: "#142e13ff",
               padding: "20px",
               borderRadius: "12px",
               textAlign: "center",
@@ -513,7 +573,7 @@ function Landing() {
           {/* Item 4 */}
           <div
             style={{
-              background: "#1f1f1f",
+              background: "#0a0a24ff",
               padding: "20px",
               borderRadius: "12px",
               textAlign: "center",
@@ -542,22 +602,41 @@ function Landing() {
           width: "100%",
           marginTop: "50px",
           position: "relative",
-          background: "#00a86b",
+          background: "transparent",
           height: isMobile ? "220px" : "350px",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          color: "#fff",
+          color: "#ffffff",
           textAlign: "center",
           padding: "20px",
+
+           borderBottom: "1px solid transparent",
+
+backgroundImage:
+
+  "linear-gradient(to right, transparent, #5b6cff, transparent)",
+
+backgroundRepeat: "no-repeat",
+
+backgroundSize: "100% 1px",
+
+backgroundPosition: "bottom",
+          
         }}
       >
         {/* Text On Color */}
         <div>
-          <h2 style={{ fontSize: isMobile ? "22px" : "34px", marginBottom: "10px" }}>
+          <h2   style={{
+    fontSize: isMobile ? "22px" : "34px",
+    marginBottom: "10px",
+    color: "#f0061aff",
+    fontFamily: "'Gloria Hallelujah', cursive",
+  }}
+>
             Become a Partner
           </h2>
-          <p style={{ fontSize: isMobile ? "14px" : "18px", marginBottom: "20px" }}>
+          <p style={{ fontSize: isMobile ? "14px" : "18px", fontFamily: "'Gloria Hallelujah', cursive",marginBottom: "20px" }}>
             Earn money by sharing your car with trusted renters
           </p>
 
@@ -583,20 +662,36 @@ function Landing() {
       <div
         style={{
           width: "100%",
-          background: "#fff",
+          background: "transparent",
           padding: isMobile ? "25px 18px" : "50px 60px",
+           borderBottom: "1px solid transparent",
+
+backgroundImage:
+
+  "linear-gradient(to right, transparent, #5b6cff, transparent)",
+
+backgroundRepeat: "no-repeat",
+
+backgroundSize: "100% 1px",
+
+backgroundPosition: "bottom",
+          
+          
         }}
       >
-        <h2
-          style={{
-            fontSize: isMobile ? "22px" : "30px",
-            fontWeight: "600",
-            marginBottom: "25px",
-            textAlign: isMobile ? "center" : "left",
-          }}
-        >
-          Ride Around Popular Cities in India
-        </h2>
+       <h2
+  style={{
+    fontSize: isMobile ? "22px" : "30px",
+    fontWeight: "10",
+    marginBottom: "25px",
+    textAlign: "center",         // force center
+    width: "100%",               // IMPORTANT for proper centering
+    fontFamily: "'Gloria Hallelujah', cursive",
+    color: "#f0061aff",
+  }}
+>
+  Ride Around Popular Cities in India
+</h2>
 
         <div
           style={{
@@ -643,21 +738,23 @@ function Landing() {
       <div
         style={{
           width: "100%",
-          background: "#0f0e0e",
-          color: "#fff",
+          background: "transparent",
+          color: "#ffffff",
           padding: "50px 30px",
           marginTop: "20px",
           borderBottom: "1px solid rgba(255,255,255,0.2)",
         }}
       >
-        <h2 style={{ fontSize: "26px", marginBottom: "15px" }}>About Us</h2>
+        <h2 style={{ fontSize: "26px", marginBottom: "15px",fontFamily: "'Gloria Hallelujah', cursive",
+    color: "#f0061aff",fontWeight: "10",textAlign: "center",  }}>About Us</h2>
 
         <p
           style={{
-            fontSize: "16px",
+            fontSize: "15px",
+            fontWeight: "10",
             lineHeight: "1.6",
             opacity: 0.9,
-            fontFamily: "'Dancing Script', cursive",
+            fontFamily: "'Gloria Hallelujah', cursive",
           }}
         >
           Founded in 2025 and headquartered in Najibabad, India, BookMyRideToday is a
@@ -673,6 +770,8 @@ function Landing() {
             flexWrap: "wrap",
             marginTop: "30px",
             gap: "40px",
+            fontFamily: "'Gloria Hallelujah', cursive",
+            
           }}
         >
           {/* Company */}

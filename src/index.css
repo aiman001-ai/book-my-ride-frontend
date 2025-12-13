@@ -9,7 +9,11 @@ html, body {
   overflow-y: auto;        /* scroll auto hoga */
   width: 100%;
   height: 100%;
-  background: #000; 
+  background-image: url("/bg10.jpg"); /* 👈 public folder */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 /* Chrome, Edge, Safari – scrollbar hide */

@@ -14,9 +14,13 @@ function Footer() {
         alignItems: "center",     // vertical center
         fontSize: "14px",
         textAlign: "center",
+        position: "fixed",
+    bottom: 0,
+    left: 0,
+    margin: 0,
       }}
     >
-      © 2025 BookMyRideToday. All Rights Reserved. Developed by R-Fa Creative Solutions
+      © 2025 BookMyRide. All Rights Reserved. Developed by R-Fa Tech.
     </footer>
   );
 }
