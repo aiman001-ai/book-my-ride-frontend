@@ -122,7 +122,8 @@ function Signup() {
                 style={{
                     width: isMobile ? "100%" : "46%",
                     height: isMobile ? "auto" : "100vh",
-                    background: "linear-gradient(135deg,#0f5fb6 0%,#1b87d6 100%)",
+                    background: "linear-gradient(135deg, #ff4b5c 0%, #000000 100%)",
+
                     color: "#fff",
                     padding: "40px 36px",
                     display: "flex",
@@ -150,11 +151,11 @@ function Signup() {
                 style={{
                     width: isMobile ? "100%" : "54%",
                     height: isMobile ? "auto" : "100vh",
-                    padding: "42px 36px",
-                    background: "#fff",
+                    padding: "1px 36px",
+                    background: "transparent",
                     display: "flex",
                     flexDirection: "column",
-                    justifyContent: "center",
+                    justifyContent: "flex-start",
                     alignItems: "center",
                     order: isMobile ? 1 : 2,
                 }}
@@ -168,6 +169,7 @@ function Signup() {
                         border: ".1px solid #ccc",
                         boxShadow: "0 8px 20px rgba(0,0,0,0.15)",
                         borderRadius: "8px", // Added border radius for consistency
+                        marginTop: "27px" ,
                     }}
                 >
                     <h1
@@ -175,7 +177,8 @@ function Signup() {
                             textAlign: "center",
                             fontSize: "36px",
                             fontWeight: "300",
-                            marginBottom: "18px",
+                            marginTop: "-20px",   
+                            marginBottom: "-1px",
                         }}
                     >
                         Signup
@@ -250,7 +253,7 @@ function Signup() {
                         </button>
                     </form>
 
-                    <div style={{ marginTop: "14px", fontSize: "13px", textAlign: "center" }}>
+                    <div style={{ marginTop: "10px", fontSize: "13px", textAlign: "center" }}>
                         Already have an account?
                         <Link to="/login" style={{ color: "#2b9af3", marginLeft: "3px" }}>
                             Login
@@ -258,7 +261,7 @@ function Signup() {
                     </div>
 
                     {/* --- ✅ OR DIVIDER --- */}
-                    <div style={{ display: 'flex', alignItems: 'center', margin: '20px 0' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', margin: '20px 0',marginTop: "1px",marginBottom: "-10px"  }}>
                         <div style={{ flex: 1, borderBottom: '1px solid #ccc' }}></div>
                         <span style={{ margin: '0 10px', color: '#888', fontSize: '14px' }}>OR</span>
                         <div style={{ flex: 1, borderBottom: '1px solid #ccc' }}></div>
@@ -266,7 +269,7 @@ function Signup() {
 
                     {/* --- ✅ GOOGLE SIGNUP BUTTON --- */}
                     <button onClick={googleLogin} style={googleButtonStyle}>
-                        <FcGoogle style={{ fontSize: "20px", marginRight: "10px" }} />
+                        <FcGoogle style={{ fontSize: "20px", marginRight: "10px", }} />
                         Signup with Google
                     </button>
 

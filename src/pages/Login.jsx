@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { handleError, handleSuccess, BASE_URL } from "../utils";
 import "../index.css";
-
+import Header from "../components/Header";
 import { useGoogleLogin } from "@react-oauth/google";
 import { googleAuth } from "../assets/api"; // Import API call
 import { FcGoogle } from "react-icons/fc";
@@ -98,28 +98,29 @@ function Login() {
     return (
         <div
             style={{
-                minHeight: "100vh",
+                    minHeight: "100vh",
                 width: "100vw",
                 display: "flex",
+                flexDirection: isMobile ? "column" : "row",
                 overflow: "hidden",
                 fontFamily: "Segoe UI, sans-serif",
-                flexDirection: isMobile ? "column-reverse" : "row",
             }}
         >
-           
+            <Header />
 
             {/* LEFT INFO PANEL */}
             <div
                 style={{
                     width: isMobile ? "100%" : "46%",
-                    minHeight: isMobile ? "42vh" : "100%",
-                    background: "linear-gradient(135deg,#0f5fb6 0%,#1b87d6 100%)",
+                    height: isMobile ? "auto" : "100vh",
+                    background: "linear-gradient(135deg, #ff4b5c 0%, #000000 100%)",
+
                     color: "#fff",
                     padding: "40px 36px",
                     display: "flex",
                     flexDirection: "column",
                     justifyContent: "center",
-                    textAlign: isMobile ? "center" : "left",
+                    order: isMobile ? 2 : 1,
                 }}
             >
                 <h2 style={{ margin: "0 0 12px 0", fontSize: "22px" }}>Welcome Back, Host!</h2>
@@ -141,23 +142,26 @@ function Login() {
             <div
                 style={{
                     width: isMobile ? "100%" : "54%",
-                    minHeight: isMobile ? "58vh" : "100%",
-                    padding: "42px 36px",
-                    background: "#fff",
+                    height: isMobile ? "auto" : "100vh",
+                    padding: "1px 36px",
+                    background: "transparent",
                     display: "flex",
-                    justifyContent: "center",
+                    flexDirection: "column",
+                    justifyContent: "flex-start",
                     alignItems: "center",
+                    order: isMobile ? 1 : 2,
                 }}
             >
                 <div
                     style={{
-                        width: "100%",
-                        maxWidth: "320px",
-                        padding: "30px 25px",
+                       width: "100%",
+                        maxWidth: "300px",
+                        padding: "25px 25px",
                         background: "#fff",
-                        border: "0.1px solid #ccc",
+                        border: ".1px solid #ccc",
                         boxShadow: "0 8px 20px rgba(0,0,0,0.15)",
-                        borderRadius: "8px",
+                        borderRadius: "8px", // Added border radius for consistency
+                        marginTop: "27px" ,
                     }}
                 >
                     <h1
