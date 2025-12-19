@@ -742,12 +742,9 @@ backgroundPosition: "bottom",
   {/* ✅ Border bottom line (slider ke bilkul niche) */}
   <div
      style={{
-      position: "absolute",
-      left: 0,
-      right: 0,
-      bottom: "330px",   // 👈 yahan fine-tune karo (-1px / 0 / -3px)
+       width: "100%",
       height: "1px",
-      marginTop: "1px", // reduce this
+      marginTop: "20px",
     background:
       "linear-gradient(to right, transparent, #5b6cff, transparent)",
   }}
@@ -762,7 +759,7 @@ backgroundPosition: "bottom",
           background: "transparent",
           color: "#ffffff",
           padding: "30px 30px",
-          marginTop: "0px",
+          marginTop: "20px",
           borderBottom: "1px solid rgba(255,255,255,0.2)",
         }}
       >
