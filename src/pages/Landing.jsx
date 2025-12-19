@@ -744,7 +744,7 @@ backgroundPosition: "bottom",
      style={{
        width: "100%",
       height: "1px",
-      position: "relative",
+      marginTop: "25PX"
     background:
       "linear-gradient(to right, transparent, #5b6cff, transparent)",
   }}
