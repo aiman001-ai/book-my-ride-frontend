@@ -741,19 +741,16 @@ backgroundPosition: "bottom",
 
   {/* ✅ Border bottom line (slider ke bilkul niche) */}
   <div
-    style={{
-      
-      marginTop: "-320px",
-    left: 0,
-    right: 0,
-
-    /* 👇 YAHI MAIN FIX HAI */
-    bottom: isMobile ? "80px" : "100px",
-
-    height: "1px",
-      background:
-        "linear-gradient(to right, transparent, #5b6cff, transparent)",
-    }}
+     style={{
+      position: "absolute",
+      left: 0,
+      right: 0,
+      bottom: "330px",   // 👈 yahan fine-tune karo (-1px / 0 / -3px)
+      height: "1px",
+      marginTop: "1px", // reduce this
+    background:
+      "linear-gradient(to right, transparent, #5b6cff, transparent)",
+  }}
   />
 </div>
 
@@ -764,8 +761,8 @@ backgroundPosition: "bottom",
           width: "100%",
           background: "transparent",
           color: "#ffffff",
-          padding: "50px 30px",
-          marginTop: "20px",
+          padding: "30px 30px",
+          marginTop: "-300px",
           borderBottom: "1px solid rgba(255,255,255,0.2)",
         }}
       >
