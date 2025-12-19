@@ -762,7 +762,7 @@ backgroundPosition: "bottom",
           background: "transparent",
           color: "#ffffff",
           padding: "30px 30px",
-          marginTop: "-300px",
+          marginTop: "0px",
           borderBottom: "1px solid rgba(255,255,255,0.2)",
         }}
       >
