@@ -1,7 +1,17 @@
 // Path: frontend\src\pages\Landing.jsx
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import SliderImport from "react-slick"; 
 import "../index.css";
+
+// Slick slider CSS
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
+import { FaFacebook } from "react-icons/fa6";
+import { FaSquareXTwitter } from "react-icons/fa6";
+import { FaInstagram } from "react-icons/fa6";
+import { FaYoutube } from "react-icons/fa";
 
 
 import { handleError, handleSuccess } from "../utils";
@@ -34,123 +44,134 @@ import kodaikanal from "../assets/cities/kodaikanal.jpg";
 
 const BASE_URL = "https://bookmyridetoday.co.in";
 
+
+// 🛠️ Slider Fix for different environments
+const Slider = SliderImport.default ? SliderImport.default : SliderImport;
+
+// 🏹 CUSTOM ARROW COMPONENTS (Isse arrows side mein aayenge)
+function NextArrow(props) {
+  const { onClick } = props;
+  return (
+    <div
+      onClick={onClick}
+      style={{
+        position: "absolute",
+        right: "-40px",
+        top: "15%",
+        transform: "translateY(-50%)",
+        width: "38px",
+        height: "38px",
+        borderRadius: "50%",
+        background: "#f0061aff",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        cursor: "pointer",
+        zIndex: 10,
+      }}
+    >
+      ❯
+    </div>
+  );
+}
+
+function PrevArrow(props) {
+  const { onClick } = props;
+  return (
+    <div
+      onClick={onClick}
+      style={{
+        position: "absolute",
+        left: "-40px",
+        top: "15%",
+        transform: "translateY(-50%)",
+        width: "38px",
+        height: "38px",
+        borderRadius: "50%",
+        background: "#f0061aff",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        cursor: "pointer",
+        zIndex: 10,
+      }}
+    >
+      ❮
+    </div>
+  );
+}
+
+
 function Landing() {
-  // ---- Hooks ----
-const navigate = useNavigate();
-const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+  const [prevScroll, setPrevScroll] = useState(0);
+  const [hideHeader, setHideHeader] = useState(false);
 
-// Screen width
-const [screenWidth, setScreenWidth] = useState(
-  typeof window !== "undefined" ? window.innerWidth : 0
-);
-
-// Header hide on scroll
-const [prevScroll, setPrevScroll] = useState(0);
-const [hideHeader, setHideHeader] = useState(false);
-
-// ---- Effects ----
-// Handle resize
-useEffect(() => {
-  const handleResize = () => setScreenWidth(window.innerWidth);
-  window.addEventListener("resize", handleResize);
-  return () => window.removeEventListener("resize", handleResize);
-}, []);
-
-// Handle scroll
-useEffect(() => {
-  const handleScroll = () => {
-    const currentScroll = window.scrollY;
-
-    // Scroll down → hide header, Scroll up → show header
-    setHideHeader(currentScroll > prevScroll && currentScroll > 80);
-
-    setPrevScroll(currentScroll);
-  };
-
-  window.addEventListener("scroll", handleScroll);
-  return () => window.removeEventListener("scroll", handleScroll);
-}, [prevScroll]); // Problematic: instead, use functional update
-
-// ---- FIXED VERSION using functional update ----
-useEffect(() => {
-  const handleScroll = () => {
-    setPrevScroll((prev) => {
-      const currentScroll = window.scrollY;
-      setHideHeader(currentScroll > prev && currentScroll > 80);
-      return currentScroll;
-    });
-  };
-
-  window.addEventListener("scroll", handleScroll);
-  return () => window.removeEventListener("scroll", handleScroll);
-}, []);
-
-
-  // 🔥 FIX: isMobile breakpoint increased from 900px to 1200px 
-  // to ensure column layout and correct text size in 'Desktop Site' mobile view.
-  const isMobile = screenWidth <= 1200; 
-  const isSmallMobile = screenWidth <= 500;
-
-  // 🔥 SEO Implementation: Update Title and Meta Description
   useEffect(() => {
-    document.title = "BookMyRide: Self-Drive Car on Rent | Rent a Car in India";
-    
-    let metaDescriptionTag = document.querySelector('meta[name="description"]');
-    if (!metaDescriptionTag) {
-      metaDescriptionTag = document.createElement('meta');
-      metaDescriptionTag.name = 'description';
-      document.getElementsByTagName('head')[0].appendChild(metaDescriptionTag);
-    }
-    metaDescriptionTag.content = "Rent a car in India for self-drive, hourly, or outstation trips. Book My Ride Today offers the most affordable and flexible car on rent service. Compare prices and book instantly.";
+    const handleResize = () => setScreenWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setPrevScroll((prev) => {
+        const currentScroll = window.scrollY;
+        setHideHeader(currentScroll > prev && currentScroll > 80);
+        return currentScroll;
+      });
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    document.title = "BookMyRide: Self-Drive Car on Rent | Rent a Car in India";
+  }, []);
+
+  const isMobile = screenWidth <= 1200;
+  const isSmallMobile = screenWidth <= 500;
+
+  // Slider Settings
+  const sliderSettings = {
+    dots: false,
+    infinite: true,
+    speed: 800,
+    slidesToShow: isMobile ? (isSmallMobile ? 2 : 3) : 4, // 2 dikhayenge mobile par taki arrows ki jagah bane
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 2500,
+    nextArrow: <NextArrow />, // Custom Next Arrow
+    prevArrow: <PrevArrow />, // Custom Prev Arrow
+  };
 
   const [formData, setFormData] = useState({
-    name: "",
-    contact: "",
-    numberOfPassengers: "",
-    cityPickPoint: "",
-    cityDropPoint: "",
-    date: "",
-    time: "",
+    name: "", contact: "", numberOfPassengers: "", cityPickPoint: "", cityDropPoint: "", date: "", time: "",
   });
 
-  const handleChange = (e) =>
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (loading) return;
     setLoading(true);
-
-      if (!formData.date || !formData.time) {
-    handleError("Please select date and time");
-    setLoading(false);
-    return;
+    if (!formData.date || !formData.time) {
+      handleError("Please select date and time");
+      setLoading(false);
+      return;
     }
-  
-
     try {
       const res = await fetch(`${BASE_URL}/rent/create`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
-
       const data = await res.json();
-
       if (data.success) {
         handleSuccess(data.message);
-        setFormData({
-          name: "",
-          contact: "",
-          numberOfPassengers: "",
-          cityPickPoint: "",
-          cityDropPoint: "",
-          date: "",
-          time: "",
-        });
-        setTimeout(() => navigate("/"), 800);
+        setFormData({ name: "", contact: "", numberOfPassengers: "", cityPickPoint: "", cityDropPoint: "", date: "", time: "" });
       } else {
         handleError(data.message);
       }
@@ -159,6 +180,7 @@ useEffect(() => {
     }
     setLoading(false);
   };
+
 
   // 🔥 Cities array with imported images
   const cities = [
@@ -661,84 +683,84 @@ backgroundPosition: "bottom",
       </div>
 
       {/* Cities Grid with imported images */}
-      <div
-        style={{
-          width: "100%",
-          background: "transparent",
-          padding: isMobile ? "25px 18px" : "50px 60px",
-           borderBottom: "1px solid transparent",
-
-backgroundImage:
-
-  "linear-gradient(to right, transparent, #5b6cff, transparent)",
-
-backgroundRepeat: "no-repeat",
-
-backgroundSize: "100% 1px",
-
-backgroundPosition: "bottom",
-          
-          
-        }}
-      >
-       <h2
+<div
   style={{
-    fontSize: isMobile ? "22px" : "30px",
-    fontWeight: "10",
-    marginBottom: "25px",
-    textAlign: "center",         // force center
-    width: "100%",               // IMPORTANT for proper centering
-    fontFamily: "'Gloria Hallelujah', cursive",
-    color: "#f0061aff",
+    position: "relative",
+    padding: isMobile ? "40px 10px 20px" : "60px 40px 20px",
   }}
 >
-  Ride Around Popular Cities in India
-</h2>
+  <h2
+    style={{
+      textAlign: "center",
+      color: "#f0061aff",
+      fontFamily: "'Gloria Hallelujah', cursive",
+      marginBottom: "30px",
+      fontSize: isMobile ? "22px" : "30px",
+    }}
+  >
+    Ride Around Popular Cities in India
+  </h2>
 
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: isMobile ? "1fr 1fr" : "1fr 1fr 1fr 1fr",
-            gap: "18px",
-          }}
-        >
-          {cities.map((city, index) => (
-            <div
-              key={index}
+  {/* Container with relative position for arrows */}
+  <div style={{ position: "relative", padding: "0 40px" }}>
+    <Slider {...sliderSettings}>
+      {cities.map((city, index) => (
+        <div key={index} style={{ padding: "0 10px" }}>
+          <div
+            style={{
+              background: "#f2f2f2",
+              borderRadius: "8px",
+              overflow: "hidden",
+              textAlign: "center",
+              cursor: "pointer",
+            }}
+          >
+            <img
+              src={city.img}
+              alt={city.name}
               style={{
-                background: "#f2f2f2",
-                borderRadius: "8px",
-                cursor: "pointer",
-                overflow: "hidden",
+                width: "100%",
+                height: "140px",
+                objectFit: "cover",
+              }}
+            />
+            <div
+              style={{
+                padding: "10px",
+                fontWeight: "600",
+                color: "#000",
               }}
             >
-              <img
-                src={city.img}
-                alt={city.name}
-                style={{
-                  width: "100%",
-                  height: "120px",
-                  objectFit: "cover",
-                }}
-              />
-              <div
-                style={{
-                  padding: "8px",
-                  textAlign: "center",
-                  fontSize: isMobile ? "15px" : "17px",
-                  fontWeight: 500,
-                }}
-              >
-                {city.name}
-              </div>
+              {city.name}
             </div>
-          ))}
+          </div>
         </div>
-      </div>
+      ))}
+    </Slider>
+  </div>
+
+  {/* ✅ Border bottom line (slider ke bilkul niche) */}
+  <div
+    style={{
+      
+      marginTop: "-320px",
+    left: 0,
+    right: 0,
+
+    /* 👇 YAHI MAIN FIX HAI */
+    bottom: isMobile ? "80px" : "100px",
+
+    height: "1px",
+      background:
+        "linear-gradient(to right, transparent, #5b6cff, transparent)",
+    }}
+  />
+</div>
 
       {/* 🔥🔥 ABOUT US SECTION (ADDED HERE) */}
       <div
         style={{
+          position: "relative",
           width: "100%",
           background: "transparent",
           color: "#ffffff",
@@ -747,6 +769,123 @@ backgroundPosition: "bottom",
           borderBottom: "1px solid rgba(255,255,255,0.2)",
         }}
       >
+  
+
+  <div
+  style={{
+    position: "absolute",
+    bottom: isMobile ? "30px" : "40px",
+    right: isMobile ? "20px" : "40px",
+    display: "flex",
+    alignItems: "center",
+    gap: isMobile ? "14px" : "18px",
+    zIndex: 10,
+  }}
+>
+<div style={{ width: "1px", height: isMobile ? "25px" : "29px", background: "#4b0d0dff" }} />
+
+<a
+  href="https://www.facebook.com/share/1JQf1zLYWo/"
+  target="_blank"
+  rel="noopener noreferrer"
+  style={{
+    width: isMobile ? "20px" : "27px",
+    height: isMobile ? "20px" : "27px",
+    background: "#1877F2",
+    color: "#fff",
+    borderRadius: "50%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    fontSize: isMobile ? "12px" : "16px",
+    boxShadow: "0 4px 10px rgba(0,0,0,0.3)",
+    textDecoration: "none",
+  }}
+>
+  <FaFacebook />
+</a>
+<div style={{ width: "1px", height: isMobile ? "25px" : "29px", background: "#4b0d0dff" }} />
+
+<a
+  href="https://twitter.com/"
+  target="_blank"
+  rel="noopener noreferrer"
+  style={{
+    width: isMobile ? "20px" : "27px",
+    height: isMobile ? "20px" : "27px",
+    background: "#000",
+    color: "#fff",
+    borderRadius: "50%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    fontSize: isMobile ? "12px" : "16px",
+    boxShadow: "0 4px 10px rgba(0,0,0,0.3)",
+    textDecoration: "none",
+  }}
+>
+  <FaSquareXTwitter />
+</a>
+<div style={{ width: "1px", height: isMobile ? "25px" : "29px", background: "#4b0d0dff" }} />
+
+<a
+  href="https://www.instagram.com/bookmyridetoday?igsh=MzNlNGNkZWQ4Mg=="
+  target="_blank"
+  rel="noopener noreferrer"
+  style={{
+    width: isMobile ? "20px" : "27px",
+    height: isMobile ? "20px" : "27px",
+    background: "linear-gradient(45deg,#f58529,#dd2a7b,#8134af)",
+    color: "#fff",
+    borderRadius: "50%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    fontSize: isMobile ? "12px" : "16px",
+    boxShadow: "0 4px 10px rgba(0,0,0,0.3)",
+    textDecoration: "none",
+  }}
+>
+  <FaInstagram />
+</a>
+<div style={{ width: "1px", height: isMobile ? "25px" : "29px", background: "#4b0d0dff" }} />
+
+<a
+  href="https://www.youtube.com/@bookmyridetoday"
+  target="_blank"
+  rel="noopener noreferrer"
+  style={{
+    width: isMobile ? "20px" : "27px",
+    height: isMobile ? "20px" : "27px",
+    background: "#FF0000",
+    color: "#fff",
+    borderRadius: "50%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    fontSize: isMobile ? "12px" : "16px",
+    boxShadow: "0 4px 10px rgba(0,0,0,0.3)",
+    textDecoration: "none",
+  }}
+>
+  <FaYoutube />
+</a>
+<div
+  style={{
+    width: "1px",
+    height: isMobile ? "25px" : "29px",
+    background: "#4b0d0dff",
+  }}
+/>
+
+</div>
+
+
+
+
+
+
+
         <h2 style={{ fontSize: "26px", marginBottom: "15px",fontFamily: "'Gloria Hallelujah', cursive",
     color: "#f0061aff",fontWeight: "10",textAlign: "center",  }}>About Us</h2>
 
