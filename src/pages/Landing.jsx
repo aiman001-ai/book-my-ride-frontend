@@ -57,7 +57,7 @@ function NextArrow(props) {
       style={{
         position: "absolute",
         right: "-40px",
-        top: "25%",
+        top: "50%",
         transform: "translateY(-50%)",
         width: "38px",
         height: "38px",
@@ -83,7 +83,7 @@ function PrevArrow(props) {
       style={{
         position: "absolute",
         left: "-40px",
-        top: "25%",
+        top: "50%",
         transform: "translateY(-50%)",
         width: "38px",
         height: "38px",
@@ -694,7 +694,7 @@ backgroundPosition: "bottom",
       textAlign: "center",
       color: "#f0061aff",
       fontFamily: "'Gloria Hallelujah', cursive",
-      marginBottom: "30px",
+      marginBottom: "40px",
       fontSize: isMobile ? "22px" : "30px",
     }}
   >
