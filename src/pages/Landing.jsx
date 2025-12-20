@@ -42,7 +42,7 @@ import khajuraho from "../assets/cities/khajuraho.jpg";
 import leh from "../assets/cities/leh.jpg";
 import kodaikanal from "../assets/cities/kodaikanal.jpg";
 
-const BASE_URL = "https://bookmyridetoday.co.in";
+const BASE_URL = "https://book-my-ride-3.onrender.com";
 
 
 // 🛠️ Slider Fix for different environments
@@ -100,6 +100,15 @@ function PrevArrow(props) {
     </div>
   );
 }
+
+const footerLinkStyle = {
+  fontSize: "14px",
+  margin: "4px 0",
+  paddingBottom: "1px",
+  borderBottom: "1px solid rgba(37, 23, 77, 0.6)",
+  display: "block",
+  cursor: "pointer",
+};
 
 
 function Landing() {
@@ -694,7 +703,7 @@ backgroundPosition: "bottom",
       textAlign: "center",
       color: "#f0061aff",
       fontFamily: "'Gloria Hallelujah', cursive",
-      marginBottom: "40px",
+      marginBottom: "50px",
       fontSize: isMobile ? "22px" : "30px",
     }}
   >
@@ -753,23 +762,26 @@ backgroundPosition: "bottom",
 
       {/* 🔥🔥 ABOUT US SECTION (ADDED HERE) */}
       <div
-        style={{
-          position: "relative",
-          width: "100%",
-          background: "transparent",
-          color: "#ffffff",
-          padding: "30px 30px",
-          marginTop: "20px",
-          borderBottom: "1px solid rgba(255,255,255,0.2)",
-        }}
+       style={{
+    position: "relative",
+    width: "100%",
+    background: "transparent",
+    color: "#ffffff",
+    padding: isMobile
+      ? "30px 20px 90px"   // 👈 extra bottom space for icons
+      : "30px 30px",
+    marginTop: "2px",
+    borderBottom: "1px solid rgba(255,255,255,0.2)",
+  }}
       >
   
 
   <div
-  style={{
+    style={{
     position: "absolute",
-    bottom: isMobile ? "30px" : "40px",
-    right: isMobile ? "20px" : "40px",
+    bottom: "30px",
+    right: isMobile ? "20%" : "40px",
+    transform: isMobile ? "translateX(50%)" : "none",
     display: "flex",
     alignItems: "center",
     gap: isMobile ? "14px" : "18px",
@@ -901,24 +913,24 @@ backgroundPosition: "bottom",
         {/* Columns */}
         <div
           style={{
-            display: "flex",
-            flexWrap: "wrap",
-            marginTop: "30px",
-            gap: "40px",
-            fontFamily: "'Gloria Hallelujah', cursive",
-            
-          }}
+    display: "flex",
+    flexWrap: "wrap",
+    marginTop: "30px",
+    gap: "40px",
+    fontFamily: "'Gloria Hallelujah', cursive",
+    justifyContent: "flex-start", // ✅ mobile + desktop same
+  }}
         >
           {/* Company */}
           <div>
-            <p style={{ fontSize: "14px", margin: "4px 0" }}>Terms and Conditions</p>
-            <p style={{ fontSize: "14px", margin: "4px 0" }}>Privacy Policy</p>
+            <p style={{ fontSize: "14px", margin: "4px 0", ...footerLinkStyle, }}>Terms and Conditions</p>
+            <p style={{ fontSize: "14px", margin: "4px 0", ...footerLinkStyle, }}>Privacy Policy</p>
           </div>
 
           {/* Our Services */}
           <div>
-            <p style={{ fontSize: "14px", margin: "4px 0" }}>Daily Drives</p>
-            <p style={{ fontSize: "14px", margin: "4px 0" }}>BookMyRideToday Hosts</p>
+            <p style={{ fontSize: "14px", margin: "4px 0" , ...footerLinkStyle,}}>Daily Drives</p>
+            <p style={{ fontSize: "14px", margin: "4px 0", ...footerLinkStyle, }}>BookMyRideToday Hosts</p>
           </div>
         </div>
       </div>
