@@ -779,7 +779,7 @@ backgroundPosition: "bottom",
   <div
     style={{
     position: "absolute",
-    bottom: "25px",
+    bottom: "50px",
     right: "20px",          // ✅ hamesha screen ke andar
     display: "flex",
     alignItems: "center",
