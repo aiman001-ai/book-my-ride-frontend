@@ -779,9 +779,8 @@ backgroundPosition: "bottom",
   <div
     style={{
     position: "absolute",
-    bottom: "30px",
-    right: isMobile ? "20%" : "40px",
-    transform: isMobile ? "translateX(50%)" : "none",
+    bottom: "25px",
+    right: "20px",          // ✅ hamesha screen ke andar
     display: "flex",
     alignItems: "center",
     gap: isMobile ? "14px" : "18px",
