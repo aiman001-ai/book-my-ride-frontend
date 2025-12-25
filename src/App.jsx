@@ -23,6 +23,10 @@ function App() {
 
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
+useEffect(() => {
+  fetch("https://book-my-ride-3.onrender.com/ping");
+}, []);
+
 
     // ⭐ AUTO LOGOUT CHECK
     useEffect(() => {
